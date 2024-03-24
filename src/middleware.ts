@@ -6,22 +6,25 @@ import { Role } from './constants/Enum/role.enum';
 export async function middleware(request: NextRequest) {
   const redirectUrl = request.nextUrl;
   const hasSessionToken = request.cookies.has('next-auth.session-token');
-  const protectedPaths = ['/admin'];
-  const matchesProtectedPath = protectedPaths.some((path) =>
+  const adminPaths = ['/admin'];
+  const teacherPaths = ['/teacher'];
+  const matchesAdminPath = adminPaths.some((path) =>
     redirectUrl.pathname.startsWith(path),
   );
+  const matchesTeacherPath = teacherPaths.some((path) =>
+  redirectUrl.pathname.startsWith(path),
+);
   const token = await getToken({ req: request });
-  const isAdmin =
-    hasSessionToken && matchesProtectedPath && token.zone[0] === Role.ADMIN;
+  const isAdmin = hasSessionToken && matchesAdminPath && !matchesTeacherPath && token.zone[0] === Role.ADMIN;
+  const isTeacher = hasSessionToken && matchesTeacherPath && !matchesAdminPath && token.zone[0] === Role.TEACHER;
 
-  if (isAdmin) {
+  if (isAdmin || isTeacher) {
     return NextResponse.next();
   }
-
   if (!hasSessionToken) {
     redirectUrl.pathname = '/auth/sign-in';
   } else {
-    if (!matchesProtectedPath) {
+    if (!matchesAdminPath && !matchesTeacherPath ) {
       return NextResponse.next();
     } else {
       redirectUrl.pathname = '/landing-page';

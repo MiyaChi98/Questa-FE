@@ -2,11 +2,12 @@
 import InputField from '../../../components/fields/InputField';
 import { FcGoogle } from 'react-icons/fc';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { EmailRegex } from 'constants/Regex/email.regex';
 import { PasswordRegex } from 'constants/Regex/password.regex';
+import { Role } from 'constants/Enum/role.enum';
 
 function SignInDefault() {
   const { push } = useRouter();
@@ -15,6 +16,7 @@ function SignInDefault() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { data: session } = useSession();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await signIn('credentials', {
@@ -22,12 +24,15 @@ function SignInDefault() {
         password: data.password,
         redirect: false,
       });
+      console.log(res)
       if (res?.status != 200) {
         return toast.error('Wrong email or password');
       } else {
-        push('/admin/default');
+        if(session.user.zone[0] === Role.ADMIN){push('/admin');}
+        if(session.user.zone[0] === Role.TEACHER){push('/teacher');}
       }
     } catch (error) {
+      console.log(error)
       return toast.error('Unknow error');
     }
   };
@@ -71,8 +76,7 @@ function SignInDefault() {
               register={register}
               maxLength={20}
               minLength={6}
-              pattern={EmailRegex}
-            />
+              pattern={EmailRegex} require={true}            />
 
             {/* Password */}
             <InputField
@@ -86,8 +90,7 @@ function SignInDefault() {
               register={register}
               maxLength={20}
               minLength={6}
-              pattern={PasswordRegex}
-            />
+              pattern={PasswordRegex} require={true}            />
 
             <button
               className="linear w-full rounded-xl bg-brand-500 bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"

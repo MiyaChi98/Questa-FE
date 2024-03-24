@@ -2,7 +2,7 @@
 // Layout components
 import { usePathname } from 'next/navigation';
 import { useContext, useState } from 'react';
-import { admin } from 'routes';
+import {teacher} from 'routes';
 import {
   getActiveNavbar,
   getActiveRoute,
@@ -21,10 +21,10 @@ export default function Admin({ children }: { children: React.ReactNode }) {
   return (
       <div className="flex h-full w-full">
         <Sidebar
-          routes={admin}
+          routes={teacher}
           open={open}
           setOpen={setOpen}
-          variant="admin"
+          variant="teacher"
         />
         {/* Navbar & Main Content */}
         <div className="h-full w-full font-dm">
@@ -37,8 +37,8 @@ export default function Admin({ children }: { children: React.ReactNode }) {
             <div>
               <Navbar
                 onOpenSidenav={() => setOpen(!open)}
-                brandText={getActiveRoute(admin, pathname)}
-                secondary={getActiveNavbar(admin, pathname)}
+                brandText={getActiveRoute(teacher, pathname)}
+                secondary={getActiveNavbar(teacher, pathname)}
               />
               <div className="mx-auto h-full p-2 !pt-[10px] md:p-2">
                 {children}

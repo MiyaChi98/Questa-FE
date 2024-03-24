@@ -24,6 +24,7 @@ export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
     return routes.map((route, index) => {
       if (
         route.layout === '/admin' ||
+        route.layout === '/teacher' ||
         route.layout === '/auth' ||
         route.layout === '/rtl'
       ) {

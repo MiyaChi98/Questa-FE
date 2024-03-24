@@ -1,15 +1,16 @@
 'use client';
 import useApi from 'app/hooks/useApi';
 
-function Pop_Up(props: {
-  userId?: string;
+function Pop_Up_Assignment(props: {
+  examId?: string[];
   display: boolean;
   setPopUpDisplay
+  handleDelete
 }) {
-  const {display, userId } = props;
+  const {display, examId } = props;
   const api = useApi();
   const handleClick = async ()=>{
-    const res = await api.delete(`user/${userId}`)
+    // const res = await api.delete(`user/${examId}`)
   }
   return (
     <div
@@ -34,7 +35,7 @@ function Pop_Up(props: {
         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
           <h3 className="text-base text-xl font-semibold leading-6 text-gray-900" id="modal-title">Delete account</h3>
           <div className="mt-2">
-            <p className="text-xl text-gray-500">Are you sure you want to delete this account? This action will permanently removed and cannot be undone.</p>
+            <p className="text-xl text-gray-500">Are you sure you want to delete this assignment? This action will permanently removed and cannot be undone.</p>
           </div>
         </div>
       </div>
@@ -44,6 +45,7 @@ function Pop_Up(props: {
       onClick={()=> {
         handleClick()
         props.setPopUpDisplay(false)
+        props.handleDelete()
       }
     }
       type="button" 
@@ -58,4 +60,4 @@ function Pop_Up(props: {
   );
 }
 
-export default  Pop_Up;
+export default  Pop_Up_Assignment;

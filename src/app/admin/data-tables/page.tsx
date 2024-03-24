@@ -1,22 +1,12 @@
 'use client';
-import tableDataColumns from 'variables/data-tables/tableDataColumns';
 import ColumnsTable from 'components/admin/data-tables/ColumnsTable';
-import instance from 'config/axios.config';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { Children, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useApi from 'app/hooks/useApi';
-import Pagination from 'components/pagination/Pagination';
-// import { useGetPosts } from './api/user-1-10';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query';
 import Button from 'components/button/button';
 import { toast } from 'react-toastify';
 import Form from 'components/admin/data-tables/Detail_Form';
 
-const queryClient = new QueryClient();
 
 const Tables = () => {
   const api = useApi();
@@ -66,7 +56,7 @@ const Tables = () => {
       <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
-        <Form display={formDisplay} type={'create'}/>
+        <Form display={formDisplay} type={'create'} setFormdisplay={setFormdisplay}/>
       </div>
       <div className="mb-3 mt-3 mr-3 grid justify-items-end">
         <button 

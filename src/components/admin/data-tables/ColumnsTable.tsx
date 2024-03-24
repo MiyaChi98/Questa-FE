@@ -109,7 +109,7 @@ function ColumnsTable(this: any, props: { tableData: any }) {
        <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
-        <Form display={formDisplay} type={'update'} userId={dataID}/>
+        <Form display={formDisplay} type={'update'} userId={dataID} setFormdisplay={setFormdisplay}/>
       </div>
       <div id={popUpDisplay? 'overlay' : ''}
       onClick = {()=>{setPopUpDisplay(false)}}

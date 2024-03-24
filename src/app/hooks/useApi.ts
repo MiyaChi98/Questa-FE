@@ -9,7 +9,6 @@ import { useRefreshToken } from './useRefreshToken';
 const useApi = () => {
   const { data: session } = useSession();
   const refreshToken = useRefreshToken();
-
   useEffect(() => {
     const requestIntercept = instance.interceptors.request.use(
       (config) => {

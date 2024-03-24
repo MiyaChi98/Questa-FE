@@ -5,6 +5,7 @@ import Links from './components/Links';
 
 import SidebarCard from 'components/sidebar/components/SidebarCard';
 import { IRoute } from 'types/navigation';
+import { MdExplore } from 'react-icons/md';
 
 function SidebarHorizon(props: { routes: IRoute[]; [x: string]: any }) {
   const { routes, open, setOpen } = props;
@@ -22,9 +23,12 @@ function SidebarHorizon(props: { routes: IRoute[]; [x: string]: any }) {
       </span>
 
       <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="ml-1 mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          Horizon <span className="font-medium">FREE</span>
+        <div className="ml-1 font-poppins text-[40px] font-bold uppercase text-navy-700 dark:text-white">
+          Questa
         </div>
+        {/* <div className="ml-1 h-2.5 font-poppins text-[13px] font-bold uppercase text-navy-700 dark:text-white">
+          Ứng dụng học tập số 
+        </div> */}
       </div>
       <div className="mb-7 mt-[58px] h-px bg-gray-300 dark:bg-white/30" />
       {/* Nav item */}
@@ -32,12 +36,6 @@ function SidebarHorizon(props: { routes: IRoute[]; [x: string]: any }) {
       <ul className="mb-auto pt-1">
         <Links routes={routes} />
       </ul>
-
-      {/* Free Horizon Card */}
-      <div className="flex justify-center">
-        <SidebarCard />
-      </div>
-
       {/* Nav item end */}
     </div>
   );

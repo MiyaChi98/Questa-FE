@@ -80,8 +80,7 @@ function SignInDefault() {
               register={register}
               maxLength={50}
               minLength={6}
-              pattern={NameRegex}
-            />
+              pattern={NameRegex} require={true}            />
 
             <ErrorMessage errors={errors} name="name" />
             {/* Email */}
@@ -96,8 +95,7 @@ function SignInDefault() {
               register={register}
               maxLength={50}
               minLength={6}
-              pattern={EmailRegex}
-            />
+              pattern={EmailRegex} require={true}            />
             <ErrorMessage errors={errors} name="email" />
             {/* Password */}
             <InputField
@@ -111,8 +109,7 @@ function SignInDefault() {
               register={register}
               maxLength={50}
               minLength={6}
-              pattern={PasswordRegex}
-            />
+              pattern={PasswordRegex} require={true}            />
             <ErrorMessage errors={errors} name="password" />
 
             {/* Phone Number */}
@@ -127,14 +124,13 @@ function SignInDefault() {
               register={register}
               maxLength={11}
               minLength={0}
-              pattern={Phone_NumberRegex}
-            />
+              pattern={Phone_NumberRegex} require={true}            />
             <ErrorMessage errors={errors} name="phone" />
             <button
               className="linear w-full rounded-xl bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               type="submit"
             >
-              Sign In
+              Sign Up
             </button>
           </form>
           <div className="mt-4">
