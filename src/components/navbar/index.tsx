@@ -27,7 +27,7 @@ const Navbar = (props: {
     // document.body.classList.contains('dark'),
     ();
   return (
-    <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/75 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className="mt-4 top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/75 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a

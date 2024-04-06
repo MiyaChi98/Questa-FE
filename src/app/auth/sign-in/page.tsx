@@ -38,7 +38,7 @@ function SignInDefault() {
   };
   return (
     <div
-      className="border-slate-600 bg-black bg-slate-500 mt-[20vh] flex w-full items-center justify-center rounded-2xl border-white px-16	py-7"
+      className="-slate-600 bg-black bg-slate-500 mt-[20vh] flex w-full items-center justify-center rounded-2xl border-white px-16	py-7"
       style={{ backgroundColor: '#475569' }}
     >
       <div className="mb-[3vh] flex h-full w-full items-center justify-center px-2">

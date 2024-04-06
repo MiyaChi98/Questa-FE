@@ -9,53 +9,79 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { onChange } from 'react-toastify/dist/core/store';
 
-export type Data_Type = {
-  name: string;
-  course: string;
-  end: string;
-  quiz: {
-    question: string;
-    img?: string;
-    audio?: string;
-    A: string;
-    B: string;
-    C?: string;
-    D?: string;
-    answer: 'A' | 'B' | 'C' | 'D';
-  }[];
-  score: number;
-  start: string;
-  subject: string;
-  time: number;
-};
+// export type Data_Type = {
+//   name: string;
+//   course: string;
+//   end: string;
+//   quiz: {
+//     question: string;
+//     img?: string;
+//     audio?: string;
+//     A: string;
+//     B: string;
+//     C?: string;
+//     D?: string;
+//     answer: 'A' | 'B' | 'C' | 'D';
+//   }[];
+//   score: number;
+//   start: string;
+//   subject: string;
+//   time: number;
+//   description: string
+// };
 const New_Assignment = () => {
   const api = useApi();
   const {
     register,
+    unregister,
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<Data_Type>()
+  } = useForm()
   const [courseArray, setCourseArray] = useState([]);
+  const [formFields, setFormFields] = useState([
+    {
+      question: '',
+      img: '',
+      audio: '',
+      A: '',
+      B: '',
+      C: '',
+      D: '',
+      answer: 'A',
+    },
+  ]);
   const handlePage = async () => {
     const res = await api.get(`course/allcourse`);
     console.log(res.data.data);
     setCourseArray(res.data.data);
   };
+  const onSubmit = (data,formFields)=>{
+    console.log(data,formFields)
+  }
   useEffect(() => {
     handlePage();
   }, []);
   return (
     <>
       <form
-        className="mt-10 grid h-[83vh] grid-cols-7 gap-4"
-        onSubmit={handleSubmit((data) => console.log(data))}
+        className="mt-10 grid grid-cols-7 gap-4"
+        onSubmit={
+          handleSubmit((data)=>{
+            onSubmit(data,formFields)
+          })
+        }
       >
-        <div className="col-span-2 h-full rounded-xl bg-white backdrop-blur-xl">
+        <div className="sticky top-4 h-fit col-span-2 rounded-xl bg-white backdrop-blur-xl">
           <div className="rounded-t-lg bg-brand-700 p-3">
             <div className="text-xl font-bold text-white ">
               Thông tin bài kiểm tra
             </div>
+            <button
+            type='submit'
+             className='bg-white'>
+              Submit
+            </button>
           </div>
           <div className="p-2">
             {/* Assignment Name */}
@@ -217,13 +243,11 @@ const New_Assignment = () => {
               <textarea
                 id="describe"
                 rows={4}
+                {...register('description')}
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder="Viết mô tả tại đây"
               ></textarea>
             </div>
-            <button type="submit" className="bg-brand-700">
-              Test
-            </button>
           </div>
         </div>
         <div className="col-span-5 h-full rounded-xl bg-white backdrop-blur-xl">
@@ -232,7 +256,9 @@ const New_Assignment = () => {
           </div>
           <Quiz
             register={register}
-          />
+            unregister={unregister}
+            formFields={formFields} 
+            setFormFields={setFormFields}                      />
         </div>
       </form>
     </>
