@@ -9,26 +9,6 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { onChange } from 'react-toastify/dist/core/store';
 
-// export type Data_Type = {
-//   name: string;
-//   course: string;
-//   end: string;
-//   quiz: {
-//     question: string;
-//     img?: string;
-//     audio?: string;
-//     A: string;
-//     B: string;
-//     C?: string;
-//     D?: string;
-//     answer: 'A' | 'B' | 'C' | 'D';
-//   }[];
-//   score: number;
-//   start: string;
-//   subject: string;
-//   time: number;
-//   description: string
-// };
 const New_Assignment = () => {
   const api = useApi();
   const {
@@ -56,8 +36,15 @@ const New_Assignment = () => {
     console.log(res.data.data);
     setCourseArray(res.data.data);
   };
-  const onSubmit = (data,formFields)=>{
+  const onSubmit = async (data,formFields)=>{
     console.log(data,formFields)
+    data['total_time'] = parseInt(data['total_time'])
+    data['total_mark'] = parseInt(data['total_mark'])
+    const createExamRes = await api.post(`exam`,{
+      ...data,
+      quizArray: formFields
+    })
+    console.log(createExamRes)
   }
   useEffect(() => {
     handlePage();
@@ -74,7 +61,7 @@ const New_Assignment = () => {
       >
         <div className="sticky top-4 h-fit col-span-2 rounded-xl bg-white backdrop-blur-xl">
           <div className="rounded-t-lg bg-brand-700 p-3">
-            <div className="text-xl font-bold text-white ">
+            <div className="text-[26px] font-bold text-white ">
               Thông tin bài kiểm tra
             </div>
             <button
@@ -92,7 +79,7 @@ const New_Assignment = () => {
               placeholder="Assignment name"
               id="name"
               type="text"
-              name="name"
+              name="title"
               register={register}
               maxLength={20}
               minLength={6}
@@ -104,10 +91,10 @@ const New_Assignment = () => {
               <label className="ml-3  font-bold text-indigo-900">Course</label>
               <Controller
                 control={control}
-                name="course"
+                name="courseId"
                 render={({ field: { onChange } }) => (
                   <select
-                    id="course"
+                    id="courseId"
                     onChange={onChange}
                     className="w-full appearance-none rounded-md border bg-white p-2.5 text-indigo-900 shadow-sm outline-none focus:border-indigo-600"
                   >
@@ -115,7 +102,9 @@ const New_Assignment = () => {
                     {courseArray.map((course, index) => {
                       console.log(index);
                       return (
-                        <option className="appearance-none rounded-md border bg-white p-2.5 text-indigo-900 shadow-sm outline-none focus:border-indigo-600">
+                        <option 
+                        value={course._id}
+                        className="appearance-none rounded-md border bg-white p-2.5 text-indigo-900 shadow-sm outline-none focus:border-indigo-600">
                           {course.courseName}
                         </option>
                       );
@@ -213,7 +202,7 @@ const New_Assignment = () => {
               placeholder="Time"
               id="time"
               type="number"
-              name="time"
+              name="total_time"
               register={register}
               maxLength={3}
               minLength={1}
@@ -228,7 +217,7 @@ const New_Assignment = () => {
               placeholder="Max score"
               id="score"
               type="number"
-              name="score"
+              name="total_mark"
               register={register}
               maxLength={4}
               minLength={1}
@@ -252,7 +241,7 @@ const New_Assignment = () => {
         </div>
         <div className="col-span-5 h-full rounded-xl bg-white backdrop-blur-xl">
           <div className="rounded-t-lg bg-brand-700 p-3">
-            <div className="text-xl font-bold text-white ">Thêm câu hỏi</div>
+            <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
           </div>
           <Quiz
             register={register}

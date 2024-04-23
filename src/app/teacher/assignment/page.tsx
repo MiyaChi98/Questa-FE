@@ -59,9 +59,6 @@ const Assignment = () => {
     <div className="mt-10 content-end">
       <div className="my-7 grid justify-items-end">
         <button 
-        // onClick={()=>{
-        //   redirect('assignment/new')
-        // }}
         className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
         ><a href="assignment/new">Add new assignment</a>
         </button>
@@ -90,39 +87,6 @@ const Assignment = () => {
           </ul>
         </nav>
       </div>
-
-      {/* <button onClick={()=>handlePage()}>lkjancsjslknclkjanclkansc</button> */}
-      {/* <div id={formDisplay? 'overlay' : ''}
-      onClick = {()=>{setFormdisplay(false)}}
-      > 
-        <Form display={formDisplay} type={'create'} setFormdisplay={setFormdisplay}/>
-      </div>
-      <div className="mb-3 mt-3 mr-3 grid justify-items-end">
-        <button 
-        onClick={()=>{setFormdisplay(true)}}
-        className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
-        >Add new user</button>
-      </div>
-        <CheckTables tableData={tableDataCheck} />
-        <div className="mr-10 mt-3 grid justify-items-end">
-        <nav aria-label="Page navigation example">
-          <ul className="list-style-none flex">
-            <li onClick={() =>handleClick(-1)}>
-              <Button name="Previous" small={false} />
-            </li>
-            {pageNumbers.map(page=> {
-              return( 
-              <li onClick={() =>handleClick(page)}>
-                <Button name={page.toString()} small={true} focus={currentPage === page.toString()} />
-              </li>
-              )
-            })}
-            <li onClick={() =>handleClick(0)}>
-              <Button name="Next" small={false}  />
-            </li>
-          </ul>
-        </nav>
-      </div> */}
     </div>
   );
 };

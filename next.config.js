@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-// const withTM = require('next-transpile-modules')(['@babel/preset-react']);
-//   '@fullcalendar/common',
-//   '@fullcalendar/common',
-//   '@fullcalendar/daygrid',
-//   '@fullcalendar/interaction',
-//   '@fullcalendar/react',
-
 const nextConfig = {
   swcMinify: true,
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
@@ -23,3 +16,29 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// import nextMDX from "@next/mdx";
+// import rehypeHighlight from "rehype-highlight";
+// import rehypeKatex from 'rehype-katex'
+// import remarkMath from 'remark-math'
+
+// const nextConfig = {
+//   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: 'https',
+//         hostname: 'avatars.githubusercontent.com',
+//       },
+//     ],
+//   },
+// }
+
+// const withMDX = nextMDX({
+//   options: {
+//     remarkPlugins: [remarkMath],
+//     rehypePlugins: [rehypeHighlight, rehypeKatex],
+//   },
+// });
+
+// export default withMDX(nextConfig);
