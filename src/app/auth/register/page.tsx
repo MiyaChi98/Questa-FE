@@ -40,32 +40,31 @@ function SignInDefault() {
 
   return (
     <div
-      className="border-slate-600 bg-slate-600 mt-[20vh] flex w-full items-center justify-center rounded-2xl border-white px-16 py-7"
-      style={{ backgroundColor: '#475569' }}
+      className=" mt-[20vh] flex w-full items-center justify-center rounded-2xl bg-white/90 border-white px-16 py-7"
     >
       <div className="mb-[3vh] flex h-full w-full items-center justify-center px-2 ">
         {/* Sign in section */}
         <div className="w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
-          <h3 className="mb-2.5 text-4xl font-bold text-navy-700 text-white">
+          <h3 className="mb-2.5 text-4xl font-bold text-indigo-900">
             Sign Up
           </h3>
-          <p className="mb-9 ml-1 text-base text-white">
+          <p className="mb-9 ml-1 text-base text-indigo-900">
             Enter your email and password to sign in!
           </p>
           <div
-            className="hover:cursor-pointerbg-navy-800 mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-cyan-300 bg-lightPrimary text-white"
+            className="hover:cursor-pointer mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-cyan-300 bg-lightPrimary text-white"
             style={{ backgroundColor: '#67e8f9' }}
           >
             <div className="rounded-full border-white text-xl">
               <FcGoogle />
             </div>
-            <p className="text-sm font-medium text-navy-700 text-white">
+            <p className="text-sm font-medium text-navy-700 text-indigo-900">
               Sign Up with Google
             </p>
           </div>
           <div className="mb-6 flex items-center">
-            <div className="h-px w-full !bg-navy-700 bg-gray-200" />
-            <div className="h-px w-full !bg-navy-700 bg-gray-200" />
+            <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
+            <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name */}
@@ -73,6 +72,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Name*"
+              label_color='indigo'
               placeholder="name"
               id="name"
               type="text"
@@ -88,6 +88,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Email*"
+              label_color='indigo'
               placeholder="mail@simmmple.com"
               id="email"
               type="text"
@@ -102,6 +103,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Password*"
+              label_color='indigo'
               placeholder="password"
               id="password"
               type="password"
@@ -117,6 +119,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Phone*"
+              label_color='indigo'
               placeholder="phone number"
               id="phone"
               type="text"
@@ -126,6 +129,8 @@ function SignInDefault() {
               minLength={0}
               pattern={Phone_NumberRegex} require={true}            />
             <ErrorMessage errors={errors} name="phone" />
+            <div className="mb-6 flex items-center">
+          </div>
             <button
               className="linear w-full rounded-xl bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               type="submit"
@@ -134,7 +139,7 @@ function SignInDefault() {
             </button>
           </form>
           <div className="mt-4">
-            <span className="text-white-700 text-sm font-medium">
+            <span className="text-indigo-900 text-sm font-medium">
               Already have a account ?
             </span>
             <a

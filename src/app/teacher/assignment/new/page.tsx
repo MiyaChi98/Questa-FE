@@ -37,14 +37,32 @@ const New_Assignment = () => {
     setCourseArray(res.data.data);
   };
   const onSubmit = async (data,formFields)=>{
+    for (let quiz of formFields) {
+      for (let [key, value] of Object.entries(quiz)) {
+        if(key!='img'&&key!='audio'){
+          quiz[key] = await preStringProcessor(value)
+        }
+
+    }
+  }
     console.log(data,formFields)
-    data['total_time'] = parseInt(data['total_time'])
-    data['total_mark'] = parseInt(data['total_mark'])
-    const createExamRes = await api.post(`exam`,{
-      ...data,
-      quizArray: formFields
-    })
-    console.log(createExamRes)
+    // data['total_time'] = parseInt(data['total_time'])
+    // data['total_mark'] = parseInt(data['total_mark'])
+    // const createExamRes = await api.post(`exam`,{
+    //   ...data,
+    //   quizArray: formFields
+    // })
+    // console.log(createExamRes)
+  };
+  const preStringProcessor = async (inputString: string) =>{
+    console.log(inputString)
+    const regex = /\*katex\*([^*]+?)\*katex\*/g;
+    const regex1 = /\*begin\*([^*]+?)\*end\*/g;
+    const processedString = inputString.replace(regex, (match, content) => {
+        return content.trim();
+    });
+    const finalString = processedString.replace(regex1,'')
+    return finalString;
   }
   useEffect(() => {
     handlePage();
@@ -52,23 +70,18 @@ const New_Assignment = () => {
   return (
     <>
       <form
-        className="mt-10 grid grid-cols-7 gap-4"
+        className="mt-10 w-full h-full flex flex-row gap-4"
         onSubmit={
           handleSubmit((data)=>{
             onSubmit(data,formFields)
           })
         }
       >
-        <div className="sticky top-4 h-fit col-span-2 rounded-xl bg-white backdrop-blur-xl">
+        <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white">
           <div className="rounded-t-lg bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">
               Thông tin bài kiểm tra
             </div>
-            <button
-            type='submit'
-             className='bg-white'>
-              Submit
-            </button>
           </div>
           <div className="p-2">
             {/* Assignment Name */}
@@ -239,9 +252,14 @@ const New_Assignment = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-5 h-full rounded-xl bg-white backdrop-blur-xl">
-          <div className="rounded-t-lg bg-brand-700 p-3">
+        <div className="w-4/5 rounded-xl bg-white ">
+          <div className="rounded-t-lg flex flex-row justify-between bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
+            <button
+            type='submit'
+            className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
+              Lưu
+            </button>
           </div>
           <Quiz
             register={register}
@@ -255,3 +273,7 @@ const New_Assignment = () => {
 };
 
 export default New_Assignment;
+function async() {
+  throw new Error('Function not implemented.');
+}
+

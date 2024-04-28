@@ -38,14 +38,13 @@ function SignInDefault() {
   };
   return (
     <div
-      className="-slate-600 bg-black bg-slate-500 mt-[20vh] flex w-full items-center justify-center rounded-2xl border-white px-16	py-7"
-      style={{ backgroundColor: '#475569' }}
+      className="-slate-600  mt-[20vh] flex w-full items-center justify-center rounded-2xl bg-white/90 border-white px-16 py-7"
     >
       <div className="mb-[3vh] flex h-full w-full items-center justify-center px-2">
         {/* Sign in section */}
         <div className="w-full max-w-full flex-col items-center justify-items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
-          <h3 className="mb-2.5 text-4xl font-bold text-white">Sign In</h3>
-          <p className="mb-9 ml-1 text-base text-white">
+          <h3 className="mb-2.5 text-4xl font-bold text-indigo-900">Sign In</h3>
+          <p className="mb-9 ml-1 text-base text-indigo-900">
             Enter your email and password to sign in!
           </p>
           <div
@@ -55,13 +54,13 @@ function SignInDefault() {
             <div className="rounded-full border-white text-xl">
               <FcGoogle />
             </div>
-            <p className="text-sm font-medium text-white">
+            <p className="text-sm font-medium text-indigo-900">
               Sign In with Google
             </p>
           </div>
           <div className="mb-6 flex items-center">
-            <div className="h-px w-full bg-gray-200 dark:!bg-navy-700" />
-            <div className="h-px w-full bg-gray-200 dark:!bg-navy-700" />
+            <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
+            <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Email */}
@@ -69,6 +68,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Email*"
+              label_color='indigo'
               placeholder="mail@simmmple.com"
               id="email"
               type="text"
@@ -83,6 +83,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Password*"
+              label_color='indigo'
               placeholder="Min. 8 characters"
               id="password"
               type="password"
@@ -91,7 +92,8 @@ function SignInDefault() {
               maxLength={20}
               minLength={6}
               pattern={PasswordRegex} require={true}            />
-
+          <div className="mb-6 flex items-center">
+          </div>
             <button
               className="linear w-full rounded-xl bg-brand-500 bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               type="submit"

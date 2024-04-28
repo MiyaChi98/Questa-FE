@@ -101,19 +101,27 @@ var renderMathInText = function renderMathInText(text, optionsCopy) {
       fragment.appendChild(document.createTextNode(data[i].data));
     } else {
       var container = document.createElement("span");
+      // container.style.cursor = 'not-allowed'
+      // container.display = 'inline-block'
+      container.style.fontFamily = 'serif'
       var display = document.createElement("span");
+      display.contentEditable = false
       var content = document.createElement("span");
+      var blankSpace =document.createElement("span");
+      blankSpace.innerHTML= '&nbsp'
+      var begin =document.createElement("span");
+      begin.innerHTML= '*begin*'
+      var end =document.createElement("span");
+      end.innerHTML= '*end*'
       content.hidden= true
-      // var begin = document.createElement("span");
-      // begin.hidden= true
-      // var end = document.createElement("span");
-      // end.hidden=true
-      // begin.innerText='**//begin//**'
-      // end.innerText='**//end//**'
+      begin.hidden=true
+      end.hidden=true
       container.appendChild(content)
-      // container.appendChild(begin)
+      container.appendChild(begin)
       container.appendChild(display)
-      // container.appendChild(end)
+      container.appendChild(end)
+      container.appendChild(blankSpace)
+      container
       // \(c^2 = a^2 + b^2\)
       var math = data[i].data; // Override any display mode defined in the settings with that
       // defined by the text itself
@@ -124,15 +132,10 @@ var renderMathInText = function renderMathInText(text, optionsCopy) {
         }
         console.log(math)
         katex.render(math, display, optionsCopy)
-        content.innerText = `$$${math}$$`
+        content.innerText = `*katex*${math}*katex*`
       } catch (e) {
       }
-      // fragment.appendChild(begin);
-      // fragment.appendChild(document.createTextNode(data[i].data));
       fragment.appendChild(container);
-      // fragment.appendChild(end);
-
-      // console.log('katex fragment', fragment)
     }
   }
 
