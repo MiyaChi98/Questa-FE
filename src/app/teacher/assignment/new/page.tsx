@@ -2,6 +2,7 @@
 
 import useApi from 'app/hooks/useApi';
 import InputField from 'components/fields/InputField';
+import AssignmentDisplay from 'components/teacher/AssignmentDisplay';
 import Quiz from 'components/teacher/Quiz';
 import { NameRegex } from 'constants/Regex/name.regex';
 import { Phone_NumberRegex } from 'constants/Regex/phone-number.regex';
@@ -31,6 +32,7 @@ const New_Assignment = () => {
       answer: 'A',
     },
   ]);
+  const [previewDisplay, setPreviewDisplay] = useState(false);
   const handlePage = async () => {
     const res = await api.get(`course/allcourse`);
     console.log(res.data.data);
@@ -40,28 +42,29 @@ const New_Assignment = () => {
     for (let quiz of formFields) {
       for (let [key, value] of Object.entries(quiz)) {
         if(key!='img'&&key!='audio'){
-          quiz[key] = await preStringProcessor(value)
+          value = preStringProcessor(value.toString())
+          console.log(preStringProcessor(value.toString()))
+          console.log(value)
         }
-
     }
   }
-    console.log(data,formFields)
-    // data['total_time'] = parseInt(data['total_time'])
-    // data['total_mark'] = parseInt(data['total_mark'])
-    // const createExamRes = await api.post(`exam`,{
-    //   ...data,
-    //   quizArray: formFields
-    // })
-    // console.log(createExamRes)
+    data['total_time'] = parseInt(data['total_time'])
+    data['total_mark'] = parseInt(data['total_mark'])
+    const createExamRes = await api.post(`exam`,{
+      ...data,
+      quizArray: formFields
+    })
+    console.log(createExamRes)
   };
-  const preStringProcessor = async (inputString: string) =>{
-    console.log(inputString)
+  const preStringProcessor = (inputString) =>{
     const regex = /\*katex\*([^*]+?)\*katex\*/g;
     const regex1 = /\*begin\*([^*]+?)\*end\*/g;
     const processedString = inputString.replace(regex, (match, content) => {
-        return content.trim();
+      console.log(String.raw`\(${content}\)`)
+      return String.raw`\(${content}\)`;
     });
     const finalString = processedString.replace(regex1,'')
+    console.log(finalString)
     return finalString;
   }
   useEffect(() => {
@@ -77,6 +80,12 @@ const New_Assignment = () => {
           })
         }
       >
+      <div 
+      id={previewDisplay ? 'overlay' : ''}
+      onClick = {()=>{setPreviewDisplay(false)}}
+      >
+        <AssignmentDisplay formFields={formFields} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay}/>
+      </div>
         <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white">
           <div className="rounded-t-lg bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">
@@ -256,14 +265,18 @@ const New_Assignment = () => {
           <div className="rounded-t-lg flex flex-row justify-between bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
             <button
+            type='button'
+            onClick={()=> setPreviewDisplay(true)}
+            className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
+              Xem trước
+            </button>
+            <button
             type='submit'
             className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
               Lưu
             </button>
           </div>
           <Quiz
-            register={register}
-            unregister={unregister}
             formFields={formFields} 
             setFormFields={setFormFields}                      />
         </div>

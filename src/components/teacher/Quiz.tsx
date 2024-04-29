@@ -13,14 +13,17 @@ import MathIcon from 'components/icons/MathIcon';
 import MathInput from 'react-math-keyboard';
 import Render_Math from './Math_Render';
 
-function Quiz(props: { register; unregister; formFields; setFormFields }) {
-  const { register, unregister, formFields, setFormFields } = props;
+function Quiz(props: { formFields; setFormFields }) {
+  const {formFields, setFormFields } = props;
   const api = useApi();
   const [onFocus, setonFocus] = useState(null);
   const [latex, setLatex] = useState('');
   const [renderMathDisplay, setRenderMathDisplay] = useState(false);
   const handleChange = (event, index, name?) => {
     renderMathInElement(document.body);
+    //stop event propagation to parent conponent
+    //because Math_Render manually fire oninput event to div
+    event.stopPropagation();
     let data = [...formFields];
     name === 'answer'
       ? (data[index][name] = event.target.value)
@@ -93,13 +96,15 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
     preview.src = '';
     setFormFields(data);
   };
-  useEffect(() => {
-    console.log(onFocus);
-  }, [onFocus]);
+  // useEffect(() => {
+  // },);
 
   return (
     <>
-      <div id={renderMathDisplay ? 'overlay_bgGray' : ''}>
+      <div 
+      id={renderMathDisplay ? 'overlay_bgGray' : ''}
+      onClick = {()=>{setRenderMathDisplay(false)}}
+      >
         <Render_Math
           display={renderMathDisplay}
           setLatex={setLatex}
@@ -171,10 +176,8 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
               </div>
               <hr className="h-0.5 bg-gray-500	" />
               {/* Question,Img,Audio */}
-              <div className="my-2 flex h-full w-full flex-col gap-2 p-2">
+              <div className="my-2 flex h-full w-full font-serif text-[20px] flex-col gap-2 p-2">
                 <div className="flex flex-col place-content-center place-items-center gap-2">
-                  {/* <MathInput 
-                  setValue={setLatex}/> */}
                   <div
                     id={`${index}_question`}
                     contentEditable={true}
@@ -182,9 +185,10 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
                       handleChange(event, index, 'question');
                     }}
                     onFocus={(event) => {
-                      setonFocus(event.target.id), console.log(onFocus);
+                      setonFocus(event.target.id)
+                      console.log(onFocus);
                     }}
-                    className=" min-h-40 w-full bg-white p-2.5 font-serif text-gray-900 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
+                    className=" min-h-28 w-full bg-white p-2.5 text-gray-900 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                   ></div>
                   {/* Image */}
                   <div
@@ -252,7 +256,7 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_A`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 text-[20px] font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         A
                       </label>
@@ -282,7 +286,7 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_C`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 text-[20px] font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         C
                       </label>
@@ -315,7 +319,7 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_B`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 text-[20px] font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         B
                       </label>
@@ -345,7 +349,7 @@ function Quiz(props: { register; unregister; formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_D`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 text-[20px] font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3  font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         D
                       </label>
