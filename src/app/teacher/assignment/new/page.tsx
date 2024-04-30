@@ -9,6 +9,7 @@ import { Phone_NumberRegex } from 'constants/Regex/phone-number.regex';
 import { useEffect, useState } from 'react';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { onChange } from 'react-toastify/dist/core/store';
+import renderMathInElement from 'utils/renderMath.mjs';
 
 const New_Assignment = () => {
   const api = useApi();
@@ -16,6 +17,7 @@ const New_Assignment = () => {
     register,
     unregister,
     handleSubmit,
+    watch,
     formState: { errors },
     control,
   } = useForm()
@@ -32,6 +34,7 @@ const New_Assignment = () => {
       answer: 'A',
     },
   ]);
+  const [assignmentData,setAssignmentData] =useState([])
   const [previewDisplay, setPreviewDisplay] = useState(false);
   const handlePage = async () => {
     const res = await api.get(`course/allcourse`);
@@ -56,6 +59,7 @@ const New_Assignment = () => {
     })
     console.log(createExamRes)
   };
+  const examData = watch()
   const preStringProcessor = (inputString) =>{
     const regex = /\*katex\*([^*]+?)\*katex\*/g;
     const regex1 = /\*begin\*([^*]+?)\*end\*/g;
@@ -67,9 +71,27 @@ const New_Assignment = () => {
     console.log(finalString)
     return finalString;
   }
+  const getFile = async (fileName: string) =>{
+    console.log(fileName)
+    const res = await api.get(`quiz/file/${fileName}`)
+    return res.data.data.fileUrl
+  }
+  const getDisplayData = async ()=>{
+    const data = formFields.map(async (form,index)=>{
+      if(form.img)
+        {
+          form.img = await getFile(form.img)
+          console.log(form.img)
+        }
+      return form
+    })
+    const resolvedValues = await Promise.all(data);
+    return resolvedValues
+  }
   useEffect(() => {
     handlePage();
-  }, []);
+    renderMathInElement(document.body)
+  }, [previewDisplay]);
   return (
     <>
       <form
@@ -81,10 +103,14 @@ const New_Assignment = () => {
         }
       >
       <div 
-      id={previewDisplay ? 'overlay' : ''}
-      onClick = {()=>{setPreviewDisplay(false)}}
+      id={previewDisplay ? 'overlay_bgGray' : ''}
+      onClick = {async ()=>{
+        setPreviewDisplay(false)
+        console.log(examData)
+        console.log(formFields)
+      }}
       >
-        <AssignmentDisplay formFields={formFields} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay}/>
+        <AssignmentDisplay formFields={assignmentData} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay} examData={examData}/>
       </div>
         <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white">
           <div className="rounded-t-lg bg-brand-700 p-3">
@@ -266,7 +292,14 @@ const New_Assignment = () => {
             <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
             <button
             type='button'
-            onClick={()=> setPreviewDisplay(true)}
+            onClick={
+              async ()=> {
+                setPreviewDisplay(true)
+                const data = await getDisplayData()
+                console.log(data)
+                setAssignmentData(data)
+              }
+            }
             className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
               Xem trước
             </button>

@@ -1,30 +1,41 @@
+import useApi from 'app/hooks/useApi';
 import React, { useEffect, useState } from 'react'
 import renderMathInElement from 'utils/renderMath.mjs';
 
 const AssignmentDisplay = (
   props:{
+    examData
     formFields
     previewDisplay
     setPreviewDisplay
   }
 ) => {
-  const {formFields,previewDisplay,setPreviewDisplay} = props
-  // const data = formFields
-  // const [assignmentData,setAssignmentData] =useState(formFields)
+  const {examData,formFields,previewDisplay,setPreviewDisplay} = props
+  const api = useApi();
   const handleChange = (event, index) => {
-    //stop event propagation to parent conponent
-    //because Math_Render manually fire oninput event to div
     event.stopPropagation();
     formFields[index]['answer'] = event.target.value
   };
   useEffect(() => {
-    renderMathInElement(document.body)
-  },[]);
+    console.log('assignment display',formFields)
+  },[formFields]);
   return (
+    <>
+    <div
+    className='w-full h-28 bg-white'
+    >
+      <div
+      className='w-2/3'>
+      </div>
+      <div
+      className='w-1/3'>
+      </div>
+    </div>
     <div  
+    id='assignment_display'
     className={`${
       previewDisplay ? '' : 'hidden'
-    } w-2/3 mt-3 flex flex-col place-items-center gap-5 p-3 bg-white`}
+    } w-2/3 h-fit m-3 flex flex-col border rounded-xl place-items-center gap-5 p-3 bg-white`}
     onClick={(e) => {
       e.stopPropagation();
     }}
@@ -91,7 +102,7 @@ const AssignmentDisplay = (
                   <input
                     type="radio"
                     id={`${index}_display_answer_A`}
-                    name={`${index}_answer`}
+                    name={`${index}_display_answer`}
                     value="A"
                     onChange={(event) =>
                       handleChange(event, index)
@@ -116,7 +127,7 @@ const AssignmentDisplay = (
                   <input
                     type="radio"
                     id={`${index}_display_answer_C`}
-                    name={`${index}_answer`}
+                    name={`${index}_display_answer`}
                     value="C"
                     onChange={(event) =>
                       handleChange(event, index)
@@ -142,7 +153,7 @@ const AssignmentDisplay = (
                   <input
                     type="radio"
                     id={`${index}_display_answer_B`}
-                    name={`${index}_answer`}
+                    name={`${index}_display_answer`}
                     value="B"
                     onChange={(event) =>
                       handleChange(event, index)
@@ -191,6 +202,7 @@ const AssignmentDisplay = (
       );
     })}
   </div>
+  </>
   )
 }
 

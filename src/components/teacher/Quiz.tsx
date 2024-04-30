@@ -27,17 +27,27 @@ function Quiz(props: { formFields; setFormFields }) {
     let data = [...formFields];
     name === 'answer'
       ? (data[index][name] = event.target.value)
-      : (data[index][name] = document.getElementById(
+      : (data[index][name] = preStringProcessor(document.getElementById(
           event.target.id,
-        ).textContent);
+        ).textContent
+      ));
     setFormFields(data);
     console.log(data);
   };
+  const preStringProcessor = (inputString) =>{
+    const regex = /\*katex\*([^*]+?)\*katex\*/g;
+    const regex1 = /\*begin\*([^*]+?)\*end\*/g;
+    const processedString = inputString.replace(regex, (match, content) => {
+      console.log(String.raw`\(${content}\)`)
+      return String.raw`\(${content}\)`;
+    });
+    const finalString = processedString.replace(regex1,'')
+    console.log(finalString)
+    return finalString;
+  }
   const handleFileInput = async (event, index: number, name: string) => {
     const file = event.target.files[0];
     console.log(file);
-    const test = await api.get(`course/allcourse`);
-    console.log(test);
     const res = await api.post(
       `quiz/upload/file`,
       {
@@ -58,7 +68,7 @@ function Quiz(props: { formFields; setFormFields }) {
         `${name}[id='${index}_${name}']`,
       );
       console.log(preview);
-      preview.src = res.data.data.imgUrl;
+      preview.src = res.data.data.fileUrl;
       setFormFields(data);
     } catch (error) {
       console.log(error);
@@ -269,7 +279,7 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className="flex h-12 w-full border-none bg-white p-3 outline-none "
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
                       ></div>
                     </div>
                     <div className="C flex flex-row place-items-center gap-2">
@@ -299,7 +309,7 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className="flex h-12 w-full border-none bg-white p-3 outline-none "
+                        className="min-h-12 w-full border-none bg-white p-3 outline-none "
                       ></div>
                     </div>
                   </div>
@@ -332,7 +342,7 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className="flex h-12 w-full border-none bg-white p-3 outline-none "
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
                       ></div>
                     </div>
                     <div className="D flex flex-row gap-2">
@@ -362,7 +372,7 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className="flex h-12 w-full border-none bg-white p-3 outline-none "
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
                       ></div>
                     </div>
                   </div>
