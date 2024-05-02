@@ -1,5 +1,3 @@
-// hooks/auth/useApiAuth.ts
-// 'use client';
 
 import instance from 'config/axios.config';
 import { useSession } from 'next-auth/react';

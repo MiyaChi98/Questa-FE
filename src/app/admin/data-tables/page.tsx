@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import useApi from 'app/hooks/useApi';
 import Button from 'components/button/button';
 import { toast } from 'react-toastify';
-import Form from 'components/admin/data-tables/Detail_Form';
+import Form from 'components/teacher/Detail_Form';
 
 
 const Tables = () => {

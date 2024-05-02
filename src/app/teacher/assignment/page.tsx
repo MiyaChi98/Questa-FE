@@ -1,11 +1,9 @@
 'use client';
-import ColumnsTable from 'components/admin/data-tables/ColumnsTable';
 import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 import useApi from 'app/hooks/useApi';
 import Button from 'components/button/button';
 import { toast } from 'react-toastify';
-import Form from 'components/admin/data-tables/Detail_Form';
 import CheckTables from 'components/teacher/CheckTables';
 
 

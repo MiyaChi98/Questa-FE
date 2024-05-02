@@ -1,4 +1,3 @@
-// hooks/auth/useRefreshToken.ts
 import instance from 'config/axios.config';
 import { signIn, useSession } from 'next-auth/react';
 export const useRefreshToken = () => {

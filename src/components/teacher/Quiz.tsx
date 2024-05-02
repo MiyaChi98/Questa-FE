@@ -184,7 +184,7 @@ function Quiz(props: { formFields; setFormFields }) {
                   </button>
                 </div>
               </div>
-              <hr className="h-0.5 bg-gray-500	" />
+              <hr className="h-0.5 bg-gray-500" />
               {/* Question,Img,Audio */}
               <div className="my-2 flex h-full w-full font-serif text-[20px] flex-col gap-2 p-2">
                 <div className="flex flex-col place-content-center place-items-center gap-2">

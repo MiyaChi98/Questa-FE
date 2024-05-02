@@ -13,7 +13,7 @@ import {
 import { Role } from 'constants/Enum/role.enum';
 import Link from 'next/link';
 import ChangeDetail from 'components/icons/ChangeDetail';
-import Form from './Detail_Form';
+import Form from '../../teacher/Detail_Form';
 import DeleteIcon from 'components/icons/DeleteIcon';
 import Pop_Up from './Delete_Pop_Up';
 
@@ -109,7 +109,7 @@ function ColumnsTable(this: any, props: { tableData: any }) {
        <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
-        <Form display={formDisplay} type={'update'} userId={dataID} setFormdisplay={setFormdisplay}/>
+        {/* <Form display={formDisplay} type={'update'} userId={dataID} setFormdisplay={setFormdisplay}/> */}
       </div>
       <div id={popUpDisplay? 'overlay' : ''}
       onClick = {()=>{setPopUpDisplay(false)}}
