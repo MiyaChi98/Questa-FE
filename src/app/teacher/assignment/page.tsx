@@ -39,7 +39,7 @@ const Assignment = () => {
     }
   }
   async function handlePage() {
-    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=7`);
+    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=5`);
     console.log(res.data.data);
     setTableData(res.data.data.allExam);
     setPageNumbers(res.data.data.numberOfPage)
@@ -54,8 +54,8 @@ const Assignment = () => {
    );
 
   return (
-    <div className="mt-10 content-end">
-      <div className="my-7 grid justify-items-end">
+    <div className="content-end">
+      <div className="grid mb-3 justify-items-end">
         <button 
         className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
         ><a href="assignment/new">Add new assignment</a>

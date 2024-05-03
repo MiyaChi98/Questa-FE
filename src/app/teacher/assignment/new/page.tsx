@@ -95,7 +95,7 @@ const New_Assignment = () => {
   return (
     <>
       <form
-        className="mt-10 w-full h-full flex flex-row gap-4"
+        className=" w-full h-full flex flex-row gap-4"
         onSubmit={
           handleSubmit((data)=>{
             onSubmit(data,formFields)

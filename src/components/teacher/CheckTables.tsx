@@ -167,9 +167,9 @@ function CheckTable(props: {
           setPopUpDisplay(true)
         }
       }
-        className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700 flex flex-row gap-3'
+        className='p-2 rounded-md bg-gray-700 flex flex-row gap-3 hover:bg-red-500'
         >
-          <DeleteIcon /> Delete 
+          <DeleteIcon />
         </button>
       </header>
 

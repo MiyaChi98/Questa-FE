@@ -32,28 +32,25 @@ const Class = () => {
     console.log(arr)
     setGrades(arr)
   }
-  const openClass = async () =>{
-
-  }
   useEffect(()=>{
     handlePage()
   },[])
   return (
-    <div className="mt-10 my-7 bg-white text-black border rounded-xl">
+    <div className="bg-white text-black border rounded-xl">
       <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
         <Form display={formDisplay} type={'create'} setFormdisplay={setFormdisplay}/>
       </div>
       <div
-      className="tilte h-fit p-7 flex justify-between">
+      className="tilte h-fit p-5 flex justify-between">
         <p className="text-[30px] ">Danh sách lớp</p>
         <div className="button-container flex flex-row gap-5">
           {/* New Class */}
         <button 
         type="button"
         onClick={()=>{setFormdisplay(true)}}
-        className='min-w-[50px] flex flex-row place-contents-center place-items-center h-fit p-3 rounded-md text-white bg-gray-700 shadow-lg'
+        className='min-w-[50px] flex flex-row place-contents-center place-items-center h-fit p-3 rounded-md text-white bg-gray-700 hover:bg-blue-700 shadow-lg'
         >
           <SmallPlusIcon/>
           Tạo lớp học
@@ -62,24 +59,24 @@ const Class = () => {
       </div>
       <hr className="h-0.5 bg-gray-500	" />
       <div
-      className="min-h-96 p-7 flex flex-col gap-10 bg-gray-100">
+      className="h-fit p-5 flex flex-col gap-5 bg-gray-100">
         {
           grades.map((grade)=>{
             return (
               <div
               className="bg-white rounded-xl">
-                <div className="min-h-16 flex px-7 place-items-center place-contents-center justify-between border rounded-xl rounded-ee-none rounded-es-none text-[20px] bg-white shadow-lg">
-                <p> Khối {grade.key}</p>
+                <div className="min-h-12 flex px-7 place-items-center place-contents-center justify-between border rounded-xl rounded-ee-none rounded-es-none bg-white shadow-lg">
+                <p className="text-[20px]"> Khối {grade.key}</p>
                 <DownArrowIcon/>
                 </div>
-                <div className="p-7 grid grid-cols-4">
+                <div className="p-3 grid grid-cols-5">
                   {grade.value.map((value,index) => {
                     return (
                       <a 
                       href={`class/id/?courseId=${value._id}`}
-                      className={`min-h-20 w-56 mb-5 col-span-${index + 1} cursor-pointer text-white rounded-xl p-3 hover:ring-4 hover:ring-blue-300 bg-gray-700 flex flex-col gap-3`}>
+                      className={`min-h-16 w-48 mb-3 col-span-${index + 1} cursor-pointer text-white rounded-md p-3 hover:bg-blue-300 bg-gray-300 flex flex-col gap-1`}>
                         <div className="flex flex-row justify-between">
-                          <p className="text-[20px] font-bold">{value.courseName}</p>
+                          <p className="font-bold">{value.courseName}</p>
                           
                         </div>
                         <div className="flex flex-row justify-between">
