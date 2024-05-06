@@ -54,7 +54,7 @@ const Assignment = () => {
    );
 
   return (
-    <div className="content-end">
+    <div className="mt-10 content-end">
       <div className="grid mb-3 justify-items-end">
         <button 
         className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
@@ -66,7 +66,7 @@ const Assignment = () => {
         <nav aria-label="Page navigation example">
           <ul className="list-style-none flex">
             <li onClick={() => handleClick(-1)}>
-              <Button name="Previous" small={false} />
+              <Button name="Previous" small={false} textcolor={''} bg={''} />
             </li>
             {pageNumbers.map((page) => {
               return (
@@ -74,13 +74,12 @@ const Assignment = () => {
                   <Button
                     name={page.toString()}
                     small={true}
-                    focus={currentPage === page.toString()}
-                  />
+                    focus={currentPage === page.toString()} textcolor={''} bg={''}                  />
                 </li>
               );
             })}
             <li onClick={() => handleClick(0)}>
-              <Button name="Next" small={false} />
+              <Button name="Next" small={false} textcolor={''} bg={''} />
             </li>
           </ul>
         </nav>

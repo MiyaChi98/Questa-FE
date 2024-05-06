@@ -95,7 +95,7 @@ const New_Assignment = () => {
   return (
     <>
       <form
-        className=" w-full h-full flex flex-row gap-4"
+        className=" w-full h-full flex flex-row mt-5"
         onSubmit={
           handleSubmit((data)=>{
             onSubmit(data,formFields)
@@ -112,7 +112,7 @@ const New_Assignment = () => {
       >
         <AssignmentDisplay formFields={assignmentData} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay} examData={examData}/>
       </div>
-        <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white">
+        <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white mr-4">
           <div className="rounded-t-lg bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">
               Thông tin bài kiểm tra
@@ -287,7 +287,7 @@ const New_Assignment = () => {
             </div>
           </div>
         </div>
-        <div className="w-4/5 rounded-xl bg-white ">
+        <div className="flex-auto w-4/5 rounded-xl bg-white ">
           <div className="rounded-t-lg flex flex-row justify-between bg-brand-700 p-3">
             <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
             <button

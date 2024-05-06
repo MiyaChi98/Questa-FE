@@ -4,9 +4,11 @@ function Button(props:
   name: string;
   small: boolean;
   focus?: boolean;
+  textcolor : string;
+  bg: string
   // onClick: ()=>{} 
 }) {
-  const { name, small, focus } = props;
+  const { name, small, focus , textcolor ,bg } = props;
   return (
     <button
       className={`linear
@@ -17,12 +19,14 @@ function Button(props:
        py-3
         text-base
          font-medium
-          text-white
+          ${textcolor? `text-${textcolor}`: 'text-white'}
           transition
            duration-200
-            hover:bg-brand-600
+            hover:${bg? `${bg}`:'bg-brand-600'}
             ${
-              focus === true ? 'bg-brand-600' : ''
+              focus === true ? 
+              `${bg? `${bg}`:'bg-brand-600'}`
+               : ''
             }  
              active:bg-brand-700
               `}

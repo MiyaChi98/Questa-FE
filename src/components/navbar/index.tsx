@@ -12,7 +12,6 @@ import {
   IoMdNotificationsOutline,
   IoMdInformationCircleOutline,
 } from 'react-icons/io';
-import avatar from '/public/img/avatars/avatar4.png';
 import Image from 'next/image';
 
 const Navbar = (props: {
@@ -27,7 +26,9 @@ const Navbar = (props: {
     // document.body.classList.contains('dark'),
     ();
   return (
-    <nav className="mt-4 top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/75 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className="mt-4 top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+      <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full right-0 bg-[url('/public/img/bgimage/bg1.png')]">
+      </div>
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a

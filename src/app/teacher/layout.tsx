@@ -32,6 +32,7 @@ export default function Teacher({ children }: { children: React.ReactNode }) {
           <main
             className={`flex w-full h-full transition-all
               md:pr-2 `}
+    
           >
             {/* Routes */}
             <div className='h-full w-full flex flex-col'>

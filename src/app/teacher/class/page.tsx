@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ChangeDetail from 'components/icons/ChangeDetail';
 import DeleteIcon from 'components/icons/DeleteIcon';
 import Form from "components/teacher/Detail_Form";
+import CollapsibleElement from "components/teacher/CollapsibleElement";
 
 
 const Class = () => {
@@ -36,7 +37,7 @@ const Class = () => {
     handlePage()
   },[])
   return (
-    <div className="bg-white text-black border rounded-xl">
+    <div className="mt-5 bg-white text-black border rounded-xl">
       <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
@@ -63,13 +64,7 @@ const Class = () => {
         {
           grades.map((grade)=>{
             return (
-              <div
-              className="bg-white rounded-xl">
-                <div className="min-h-12 flex px-7 place-items-center place-contents-center justify-between border rounded-xl rounded-ee-none rounded-es-none bg-white shadow-lg">
-                <p className="text-[20px]"> Khối {grade.key}</p>
-                <DownArrowIcon/>
-                </div>
-                <div className="p-3 grid grid-cols-5">
+              <CollapsibleElement title= {`Khối ${grade.key}`}>
                   {grade.value.map((value,index) => {
                     return (
                       <a 
@@ -90,8 +85,7 @@ const Class = () => {
                     )
                   }
                   )}
-                </div>
-              </div>
+              </CollapsibleElement>
             )
           })
         }

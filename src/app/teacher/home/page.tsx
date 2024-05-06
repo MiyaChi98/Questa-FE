@@ -5,7 +5,7 @@ import { MdAssignmentAdd, MdClass, MdContactSupport, MdLibraryBooks, MdPeopleOut
 
 const Home = () => {
   return (
-    <div className='flex-col gap-40 place-content-center my-20 md-max:gap-10'>
+    <div className='flex-col gap-40 place-content-center md-max:gap-10'>
       {/* <p className='text-[26px] font-bold text-white'>Chào mừng bạn đến với Azota 🎉</p>
       <p className='text-[20px] font-bold text-white'>
         Bạn có thể tạo Bài tập, Đề thi hoặc Bảng đáp án để học sinh thi online hoặc offline bằng phiếu tô trắc nghiệm.

@@ -40,7 +40,7 @@ function SignInDefault() {
 
   return (
     <div
-      className=" mt-[20vh] flex w-full items-center justify-center rounded-2xl bg-white/90 border-white px-16 py-7"
+      className="flex w-full items-center justify-center rounded-2xl bg-white/90 border-white px-16 py-7"
     >
       <div className="mb-[3vh] flex h-full w-full items-center justify-center px-2 ">
         {/* Sign in section */}
@@ -48,10 +48,7 @@ function SignInDefault() {
           <h3 className="mb-2.5 text-4xl font-bold text-indigo-900">
             Sign Up
           </h3>
-          <p className="mb-9 ml-1 text-base text-indigo-900">
-            Enter your email and password to sign in!
-          </p>
-          <div
+          {/* <div
             className="hover:cursor-pointer mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-cyan-300 bg-lightPrimary text-white"
             style={{ backgroundColor: '#67e8f9' }}
           >
@@ -61,7 +58,7 @@ function SignInDefault() {
             <p className="text-sm font-medium text-navy-700 text-indigo-900">
               Sign Up with Google
             </p>
-          </div>
+          </div> */}
           <div className="mb-6 flex items-center">
             <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
             <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
