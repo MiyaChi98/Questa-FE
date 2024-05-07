@@ -151,13 +151,13 @@ function CheckTable(props: {
     debugTable: true,
   });
   return (
-    <div>
+    <div className=''>
       <div id={popUpDisplay? 'overlay' : ''}
       onClick = {()=>{setPopUpDisplay(false)}}
       > 
         <Pop_Up_Assignment display={popUpDisplay} setPopUpDisplay={setPopUpDisplay} handleDelete={handleDelete}/>
     </div>
-    <Card extra={'w-full h-full sm:overflow-auto px-6'} bgColor = {'bg-white'}>
+    <Card extra={'w-full h-full sm:overflow-auto px-10'} bgColor = {'bg-white'}>
       <header className="relative flex items-center justify-between pt-4">
       <div className="relative">
             <input

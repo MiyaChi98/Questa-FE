@@ -36,6 +36,7 @@ const New_Assignment = () => {
   ]);
   const [assignmentData,setAssignmentData] =useState([])
   const [previewDisplay, setPreviewDisplay] = useState(false);
+  const [currentNav, setcurrentNav] = useState(false);
   const handlePage = async () => {
     const res = await api.get(`course/allcourse`);
     console.log(res.data.data);
@@ -90,12 +91,12 @@ const New_Assignment = () => {
   }
   useEffect(() => {
     handlePage();
-    renderMathInElement(document.body)
-  }, [previewDisplay]);
+    // renderMathInElement(document.body)
+  }, []);
   return (
     <>
       <form
-        className=" w-full h-full flex flex-row mt-5"
+        className=" w-full h-full flex flex-row px-20 bg-background-100"
         onSubmit={
           handleSubmit((data)=>{
             onSubmit(data,formFields)
@@ -112,11 +113,19 @@ const New_Assignment = () => {
       >
         <AssignmentDisplay formFields={assignmentData} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay} examData={examData}/>
       </div>
-        <div className="w-1/5	sticky top-4 h-fit rounded-xl bg-white mr-4">
-          <div className="rounded-t-lg bg-brand-700 p-3">
-            <div className="text-[26px] font-bold text-white ">
-              Thông tin bài kiểm tra
+        <div className={`flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? 'hidden': ''}`}>
+        <div className="rounded-t-lg flex flex-row justify-between bg-blue-200 p-3">
+            <div className="text-[20px] font-bold text-white">
+              Thông tin đề kiểm tra 
             </div>
+            <button
+            type='submit'
+            onClick={()=>{
+              setcurrentNav(true)
+            }}
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+              Tiếp tục
+            </button>  
           </div>
           <div className="p-2">
             {/* Assignment Name */}
@@ -287,9 +296,12 @@ const New_Assignment = () => {
             </div>
           </div>
         </div>
-        <div className="flex-auto w-4/5 rounded-xl bg-white ">
-          <div className="rounded-t-lg flex flex-row justify-between bg-brand-700 p-3">
-            <div className="text-[26px] font-bold text-white ">Thêm câu hỏi</div>
+        <div className={`flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? '':'hidden'}`}>
+          <div className="rounded-t-lg flex flex-row justify-between bg-blue-200 p-3">
+            <div className="text-[20px] font-bold text-white">
+              Thêm câu hỏi
+              </div>
+            <div className='flex gap-2'>
             <button
             type='button'
             onClick={
@@ -300,18 +312,30 @@ const New_Assignment = () => {
                 setAssignmentData(data)
               }
             }
-            className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
+            className='p-1 px-2 min-w-[80px]  font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
               Xem trước
             </button>
             <button
             type='submit'
-            className='min-w-[80px] text-[26px] font-bold text-indigo-900 rounded-md bg-white'>
-              Lưu
+            onClick={()=>{
+              setcurrentNav(false)
+            }}
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+              Quay lại
             </button>
+            <button
+            type='submit'
+            // onClick={()=>{
+            //   setcurrentNav(true)
+            // }}
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+              Tiếp tục
+            </button>
+            </div>
           </div>
           <Quiz
             formFields={formFields} 
-            setFormFields={setFormFields}                      />
+            setFormFields={setFormFields}/>
         </div>
       </form>
     </>

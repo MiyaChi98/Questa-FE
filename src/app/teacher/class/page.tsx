@@ -37,30 +37,33 @@ const Class = () => {
     handlePage()
   },[])
   return (
-    <div className="mt-5 bg-white text-black border rounded-xl">
+    <div className="w-full h-full px-10">
+    <div className="text-navy-700 rounded-xl">
       <div id={formDisplay? 'overlay' : ''}
       onClick = {()=>{setFormdisplay(false)}}
       > 
         <Form display={formDisplay} type={'create'} setFormdisplay={setFormdisplay}/>
       </div>
       <div
-      className="tilte h-fit p-5 flex justify-between">
-        <p className="text-[30px] ">Danh sách lớp</p>
+      className="tilte h-fit p-3 px-7 flex justify-end items-center">
+        {/* <p className="text-[26px] font-bold">
+          Danh sách lớp
+          </p> */}
         <div className="button-container flex flex-row gap-5">
           {/* New Class */}
         <button 
         type="button"
         onClick={()=>{setFormdisplay(true)}}
-        className='min-w-[50px] flex flex-row place-contents-center place-items-center h-fit p-3 rounded-md text-white bg-gray-700 hover:bg-blue-700 shadow-lg'
+        className='min-w-[50px] flex flex-row place-contents-center place-items-center h-fit p-2 rounded-md text-white bg-gray-700 hover:bg-blue-700 shadow-lg'
         >
           <SmallPlusIcon/>
           Tạo lớp học
         </button>
         </div>
       </div>
-      <hr className="h-0.5 bg-gray-500	" />
+      {/* <hr className="h-0.5 bg-gray-500 mx-7" /> */}
       <div
-      className="h-fit p-5 flex flex-col gap-5 bg-gray-100">
+      className="h-fit p-5 flex flex-col gap-5">
         {
           grades.map((grade)=>{
             return (
@@ -72,7 +75,6 @@ const Class = () => {
                       className={`min-h-16 w-48 mb-3 col-span-${index + 1} cursor-pointer text-white rounded-md p-3 hover:bg-blue-300 bg-gray-300 flex flex-col gap-1`}>
                         <div className="flex flex-row justify-between">
                           <p className="font-bold">{value.courseName}</p>
-                          
                         </div>
                         <div className="flex flex-row justify-between">
                           <p>Sĩ số : {}</p>
@@ -90,6 +92,7 @@ const Class = () => {
           })
         }
       </div>
+    </div>
     </div>
   );
 };

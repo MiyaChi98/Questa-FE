@@ -266,9 +266,9 @@ function StudentTable(props: {
                           return (
                             <div className="flex flex-row items-center">
                               <td className="flex min-w-[30px] flex-row items-center justify-center gap-1 border-white/0 py-3 pr-4 text-lime-400">
-                                <p className="text-gray-700">{status.now}</p>
+                                <p className="text-gray-700">{status.before}</p>
                                 <p>-</p>
-                                <p>{status.before}</p>
+                                <p>{status.now.toFixed(2)}</p>
                                 <UpArrow />
                               </td>
                             </div>

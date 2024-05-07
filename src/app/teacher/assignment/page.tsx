@@ -54,7 +54,7 @@ const Assignment = () => {
    );
 
   return (
-    <div className="mt-10 content-end">
+    <div className=" w-full h-full flex flex-col justify-end px-20 bg-background-100">
       <div className="grid mb-3 justify-items-end">
         <button 
         className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
@@ -62,7 +62,7 @@ const Assignment = () => {
         </button>
       </div>
       <CheckTables tableData={TableData} currentPage = {currentPage} setCurrentPage = {setCurrentPage} />
-      <div className="mr-10 mt-3 grid justify-items-end">
+      <div className="mr-10 mb-10 mt-3 grid justify-items-end">
         <nav aria-label="Page navigation example">
           <ul className="list-style-none flex">
             <li onClick={() => handleClick(-1)}>

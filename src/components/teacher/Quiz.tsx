@@ -14,11 +14,13 @@ import MathInput from 'react-math-keyboard';
 import Render_Math from './Math_Render';
 
 function Quiz(props: { formFields; setFormFields }) {
-  const {formFields, setFormFields } = props;
+  const { formFields, setFormFields } = props;
   const api = useApi();
   const [onFocus, setonFocus] = useState(null);
   const [latex, setLatex] = useState('');
   const [renderMathDisplay, setRenderMathDisplay] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState(0);
+  
   const handleChange = (event, index, name?) => {
     renderMathInElement(document.body);
     //stop event propagation to parent conponent
@@ -27,24 +29,23 @@ function Quiz(props: { formFields; setFormFields }) {
     let data = [...formFields];
     name === 'answer'
       ? (data[index][name] = event.target.value)
-      : (data[index][name] = preStringProcessor(document.getElementById(
-          event.target.id,
-        ).textContent
-      ));
+      : (data[index][name] = preStringProcessor(
+          document.getElementById(event.target.id).textContent,
+        ));
     setFormFields(data);
     console.log(data);
   };
-  const preStringProcessor = (inputString) =>{
+  const preStringProcessor = (inputString) => {
     const regex = /\*katex\*([^*]+?)\*katex\*/g;
     const regex1 = /\*begin\*([^*]+?)\*end\*/g;
     const processedString = inputString.replace(regex, (match, content) => {
-      console.log(String.raw`\(${content}\)`)
+      console.log(String.raw`\(${content}\)`);
       return String.raw`\(${content}\)`;
     });
-    const finalString = processedString.replace(regex1,'')
-    console.log(finalString)
+    const finalString = processedString.replace(regex1, '');
+    console.log(finalString);
     return finalString;
-  }
+  };
   const handleFileInput = async (event, index: number, name: string) => {
     const file = event.target.files[0];
     console.log(file);
@@ -106,14 +107,27 @@ function Quiz(props: { formFields; setFormFields }) {
     preview.src = '';
     setFormFields(data);
   };
+  const getRange = (id) => {
+    console.log('ok')
+    const element = document.getElementById(id);
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const clonedRange = range.cloneRange();
+    clonedRange.selectNodeContents(element);
+    clonedRange.setEnd(range.endContainer, range.endOffset);
+    const cursorPosition = clonedRange.toString().length;
+    setCursorPosition(cursorPosition);
+    console.log('this is cursor',cursorPosition)
+  };
   // useEffect(() => {
   // },);
-
   return (
     <>
-      <div 
-      id={renderMathDisplay ? 'overlay_bgGray' : ''}
-      onClick = {()=>{setRenderMathDisplay(false)}}
+      <div
+        id={renderMathDisplay ? 'overlay_bgGray' : ''}
+        onClick={() => {
+          setRenderMathDisplay(false);
+        }}
       >
         <Render_Math
           display={renderMathDisplay}
@@ -121,9 +135,10 @@ function Quiz(props: { formFields; setFormFields }) {
           latex={latex}
           onFocus={onFocus}
           setRenderMathDisplay={setRenderMathDisplay}
+          cursorPosition={cursorPosition}
         />
       </div>
-      <div className="mt-3 flex flex-col place-items-center gap-5 p-3 ">
+      <div className="mt-3 flex flex-col place-items-center gap-5 p-3 px-7 rounded-md">
         {formFields.map((form, index) => {
           if (form === null) {
             return;
@@ -131,10 +146,9 @@ function Quiz(props: { formFields; setFormFields }) {
           return (
             <div
               key={index}
-              className="mb-5 w-full bg-gray-600/20 text-indigo-900"
+              className="mb-5 w-full border bg-slate/10 text-navy-700 rounded-md"
             >
-              <hr />
-              <div className="flex flex-row content-center justify-between bg-gray-600/50">
+              <div className="flex flex-row bg-slate/20 content-center justify-between rounded-se-md rounded-ss-md">
                 <p className="m-2 text-[21px] font-bold ">Câu {index + 1}:</p>
                 <div className="flex flex-row">
                   {/* Math Equation */}
@@ -186,7 +200,7 @@ function Quiz(props: { formFields; setFormFields }) {
               </div>
               <hr className="h-0.5 bg-gray-500" />
               {/* Question,Img,Audio */}
-              <div className="my-2 flex h-full w-full font-serif text-[20px] flex-col gap-2 p-2">
+              <div className="my-2 flex h-full w-full flex-col gap-2 p-2 text-[20px]">
                 <div className="flex flex-col place-content-center place-items-center gap-2">
                   <div
                     id={`${index}_question`}
@@ -195,8 +209,11 @@ function Quiz(props: { formFields; setFormFields }) {
                       handleChange(event, index, 'question');
                     }}
                     onFocus={(event) => {
-                      setonFocus(event.target.id)
+                      setonFocus(event.target.id);
                       console.log(onFocus);
+                    }}
+                    onSelect={()=>{
+                      getRange(onFocus)
                     }}
                     className=" min-h-28 w-full bg-white p-2.5 text-gray-900 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                   ></div>
@@ -279,7 +296,10 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
+                        onSelect={()=>{
+                          getRange(onFocus)
+                        }}
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                       ></div>
                     </div>
                     <div className="C flex flex-row place-items-center gap-2">
@@ -309,7 +329,10 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className="min-h-12 w-full border-none bg-white p-3 outline-none "
+                        onSelect={()=>{
+                          getRange(onFocus)
+                        }}
+                        className="min-h-12 w-full border-none bg-white p-3 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                       ></div>
                     </div>
                   </div>
@@ -342,7 +365,10 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
+                        onSelect={()=>{
+                          getRange(onFocus)
+                        }}
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                       ></div>
                     </div>
                     <div className="D flex flex-row gap-2">
@@ -372,7 +398,10 @@ function Quiz(props: { formFields; setFormFields }) {
                         onFocus={(event) => {
                           setonFocus(event.target.id), console.log(onFocus);
                         }}
-                        className=" min-h-12 w-full border-none bg-white p-3 outline-none "
+                        onSelect={()=>{
+                          getRange(onFocus)
+                        }}
+                        className=" min-h-12 w-full border-none bg-white p-3 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
                       ></div>
                     </div>
                   </div>

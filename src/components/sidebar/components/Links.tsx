@@ -30,7 +30,7 @@ export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
       ) {
         return (
           <NavLink key={index} href={route.layout + '/' + route.path}>
-            <div className="relative mb-3 flex hover:cursor-pointer">
+            <div className={`h-12 relative mb-1 flex hover:cursor-pointer ${activeRoute(route.path) ? 'bg-gray-100':''}`}>
               <li
                 className="my-[3px] flex cursor-pointer items-center px-8"
                 key={index}
@@ -55,7 +55,7 @@ export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
                 </p>
               </li>
               {activeRoute(route.path) ? (
-                <div className="absolute right-0 top-px h-9 w-1 rounded-lg bg-brand-500 dark:bg-brand-400" />
+                <div className="absolute right-0 top-px h-12 w-0.5 rounded-lg bg-brand-500 dark:bg-brand-400" />
               ) : null}
             </div>
           </NavLink>

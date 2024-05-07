@@ -18,6 +18,7 @@ const AssignmentDisplay = (
   };
   useEffect(() => {
     console.log('assignment display',formFields)
+    renderMathInElement(document.body)
   },[formFields]);
   return (
     <>

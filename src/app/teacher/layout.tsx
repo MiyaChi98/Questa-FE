@@ -19,7 +19,7 @@ export default function Teacher({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   // if (isWindowAvailable()) document.documentElement.dir = 'ltr';
   return (
-      <div className="flex h-full w-full">
+      <div className="flex h-full w-full bg-background-100">
         <Sidebar
           routes={teacher}
           open={open}
@@ -27,26 +27,26 @@ export default function Teacher({ children }: { children: React.ReactNode }) {
           variant="teacher"
         />
         {/* Navbar & Main Content */}
-        <div className="w-full h-full font-dm xl:pl-[323px]">
-          {/* Main Content */}
+        <div 
+        className="w-full h-full font-dm xl:pl-[220px]"
+        >
           <main
             className={`flex w-full h-full transition-all
-              md:pr-2 `}
-    
+              `}
           >
-            {/* Routes */}
-            <div className='h-full w-full flex flex-col'>
+            <div 
+            className='h-full w-full flex flex-col'>
               <Navbar
                 onOpenSidenav={() => setOpen(!open)}
                 brandText={getActiveRoute(teacher, pathname)}
                 secondary={getActiveNavbar(teacher, pathname)}
               />
-              <div className="mx-auto flex-auto w-full p-2 !pt-[10px] md:p-2">
+              <div 
+              className="mx-auto flex-auto w-full p-2 !pt-[10px] md:p-2"
+              >
                 {children}
               </div>
-              {/* <div className="fixed bottom-0 left-0 w-full border-t border-gray-200 bg-white p-4 shadow dark:border-gray-600 ">
-                <Footer />
-              </div> */}
+
             </div>
           </main>
         </div>

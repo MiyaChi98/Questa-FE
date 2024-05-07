@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import CollapsibleElement from "components/teacher/CollapsibleElement";
 import ExamDropdown from 'components/teacher/ExamDropdown';
+import Download from 'components/icons/DashCurveDown';
 
 
 const id = () => {
@@ -90,7 +91,7 @@ const id = () => {
   const handlePage = async () => {
     const allStudent = await api.get(`course/${currentCourseID}/allStudent`);
     const allExam = await api.get(`exam/course/${currentCourseID}`);
-    setTableData(
+    await setTableData(
       allStudent.data.data.slice(
         (parseInt(currentPage) - 1) * 5,
         parseInt(currentPage) * 5,
@@ -100,11 +101,12 @@ const id = () => {
       { length: Math.ceil(allStudent.data.data.length / 5) },
       (_, i) => i + 1,
     );
-    setPageNumbers(numberOfPage);
+    await setPageNumbers(numberOfPage);
     const course = await api.get(`course/${currentCourseID}`);
     console.log(course.data.data);
-    setCourse(course.data.data);
-    setExamData(allExam.data.data);
+    await setCourse(course.data.data);
+    await setExamData(allExam.data.data);
+    console.log(allExam.data.data)
   };
   useEffect(() => {
     currentNav
@@ -116,7 +118,7 @@ const id = () => {
     replace(`${pathname}?${params.toString()}`);
   }, [currentCourseID, currentPage]);
   return (
-    <div className="mt-5 flex flex-col text-black">
+    <div className=" flex flex-col text-navy-700 px-10">
       <div className="flex h-12 flex-row rounded-se-full rounded-ss-full bg-white">
         <button
           id="class"
@@ -225,7 +227,13 @@ const id = () => {
                   return (
                     <a 
                     href='#'
-                    className='w-full min-h-12'>
+                    className='w-[96%] min-h-16 m-3 cursor-pointer rounded-md p-3 hover:bg-blue-300 bg-gray-100 flex flex-col gap-1'>
+                    <div className='w-full h-full grid grid-cols-4'>
+                      <div className='h-full flex items-center font-bold '>{doc.title}</div>
+                      <div className='h-full flex justify-center items-center'>{doc.avgScore.length? doc.avgScore[0].avgValue.toFixed(2): 'Chưa có dữ liệu'}</div>
+                      <div className='h-full flex justify-center items-center'>{`${doc.numberofSubmit}/${tableData.length} đã nộp`}</div>
+                      <div className='h-full flex justify-center items-center'><Download/></div>
+                    </div>
                     </a>
                   )
                 })}

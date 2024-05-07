@@ -15,7 +15,7 @@ const ExamDropdown = ({ title, children }) => {
         <div className='ml-3 text-[20px]'>{title}</div>
       </div>
       {isOpen && (
-        <div className="pl-4 flex flex-col ">
+        <div className="mt-2 pl-4 flex flex-col flex-wrap">
           {children}
         </div>
       )}

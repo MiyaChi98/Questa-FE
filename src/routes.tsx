@@ -39,31 +39,31 @@ export const admin = [
 ];
 export const teacher = [
   {
-    name: 'Home',
+    name: 'Trang chủ',
     layout: '/teacher',
     path: 'home',
     icon: <MdHome className="h-6 w-6" />,
   },
   {
-    name: 'Assignment',
+    name: 'Đề kiểm tra',
     layout: '/teacher',
     icon: <MdAssignmentAdd className="h-6 w-6" />,
     path: 'assignment',
   },
   {
-    name: 'Class',
+    name: 'Hồ sơ lớp học',
     layout: '/teacher',
     icon: <MdClass className="h-6 w-6" />,
     path: 'class',
   },
   {
-    name: 'Content',
+    name: 'Dữ liệu học thuật',
     layout: '/teacher',
     icon: <MdLibraryBooks className="h-6 w-6" />,
     path: 'content',
   },
   {
-    name: 'Profile',
+    name: 'Hồ sơ cá nhân',
     layout: '/teacher',
     path: 'profile',
     icon: <MdPerson className="h-6 w-6" />,
