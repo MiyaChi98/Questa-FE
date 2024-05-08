@@ -40,25 +40,17 @@ function SignInDefault() {
 
   return (
     <div
-      className="flex w-full items-center justify-center rounded-2xl bg-white/90 border-white px-16 py-7"
+    className="flex w-full items-center justify-center rounded-2xl bg-white border border-2 px-16 py-7"
     >
-      <div className="mb-[3vh] flex h-full w-full items-center justify-center px-2 ">
+      <div className="mb-[3vh] flex h-full w-full items-center justify-center">
         {/* Sign in section */}
-        <div className="w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
+        <div className="w-full flex-col items-center">
           <h3 className="mb-2.5 text-4xl font-bold text-indigo-900">
-            Sign Up
+            Sign Up 
           </h3>
-          {/* <div
-            className="hover:cursor-pointer mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-cyan-300 bg-lightPrimary text-white"
-            style={{ backgroundColor: '#67e8f9' }}
-          >
-            <div className="rounded-full border-white text-xl">
-              <FcGoogle />
-            </div>
-            <p className="text-sm font-medium text-navy-700 text-indigo-900">
-              Sign Up with Google
-            </p>
-          </div> */}
+          <p className="mb-9 ml-1 text-base text-indigo-900">
+            Welcome, please enter all infomation to sign up!
+          </p>
           <div className="mb-6 flex items-center">
             <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />
             <div className="h-px w-full bg-gray-500 dark:!bg-navy-700" />

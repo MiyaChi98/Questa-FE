@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function Auth({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full place-items-center place-contents-center items-center justify-center">
-      <div className="w-4/12 flex place-items-center place-contents-center">
+    <div className="flex w-full h-full items-center justify-center bg-background-100">
+      <div className="xl:w-[480px] md:w-96 sm:w-80 flex place-items-center place-contents-center items-center justify-center">
         <div className={inter.className}>{children}</div>
       </div>
     </div>
