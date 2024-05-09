@@ -8,15 +8,22 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { EmailRegex } from 'constants/Regex/email.regex';
 import { PasswordRegex } from 'constants/Regex/password.regex';
 import { Role } from 'constants/Enum/role.enum';
+import { useState } from 'react';
+import OtpInput from 'components/teacher/OtpInput';
+import useApi from 'app/hooks/useApi';
 
 function SignInDefault() {
   const { push } = useRouter();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+  const api = useApi();
   const { data: session } = useSession();
+  const [otpInput, setOtpInput] = useState(false);
+  const data = watch();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await signIn('credentials', {
@@ -24,22 +31,48 @@ function SignInDefault() {
         password: data.password,
         redirect: false,
       });
-      console.log(res)
+      console.log(res);
       if (res?.status != 200) {
         return toast.error('Wrong email or password');
       } else {
-        if(session.user.zone[0] === Role.ADMIN){push('/admin');}
-        if(session.user.zone[0] === Role.TEACHER){push('/teacher');}
+        if (session.user.zone[0] === Role.ADMIN) {
+          push('/admin');
+        }
+        if (session.user.zone[0] === Role.TEACHER) {
+          push('/teacher');
+        }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return toast.error('Unknow error');
     }
   };
+  const handleForgetPassword = async () => {
+    const res = await api.post('mail/sendOTP', {
+      email: data.email,
+    });
+    if(res.status === 201)
+    {
+      setOtpInput(true)
+    }
+    else toast.error('eh');
+    console.log(res);
+  };
   return (
-    <div
-      className="flex w-full items-center justify-center rounded-2xl bg-white border border-2 px-16 py-7"
-    >
+    <div className="flex w-full items-center justify-center rounded-2xl border border-2 bg-white px-16 py-7">
+      <div
+        id={otpInput ? 'overlay' : ''}
+        onClick={() => {
+          setOtpInput(false);
+        }}
+      >
+        <OtpInput
+          display={otpInput}
+          setOtpInput={setOtpInput}
+          email={data.email}
+          resetpassword={''}
+        />
+      </div>
       <div className="flex h-full w-full items-center justify-center">
         {/* Sign in section */}
         <div className="w-full flex-col items-center ">
@@ -68,7 +101,7 @@ function SignInDefault() {
               variant="auth"
               extra="mb-3"
               label="Email*"
-              label_color='indigo'
+              label_color="indigo"
               placeholder="mail@simmmple.com"
               id="email"
               type="text"
@@ -76,33 +109,48 @@ function SignInDefault() {
               register={register}
               maxLength={20}
               minLength={6}
-              pattern={EmailRegex} require={true}            />
+              pattern={EmailRegex}
+              require={true}
+            />
 
             {/* Password */}
             <InputField
               variant="auth"
               extra="mb-3"
               label="Password*"
-              label_color='indigo'
-              placeholder="Min. 8 characters"
+              label_color="indigo"
+              placeholder="Ít nhất 6 kí tự"
               id="password"
               type="password"
               name="password"
               register={register}
               maxLength={20}
               minLength={6}
-              pattern={PasswordRegex} require={true}            />
-          <div className="mb-6 flex items-center">
-          </div>
+              pattern={PasswordRegex}
+              require={true}
+            />
+            <div className="flex w-full justify-end">
+              <p
+                onClick={() => {
+                  data.email
+                    ? handleForgetPassword()
+                    : toast.error('Hãy nhập trường email');
+                }}
+                className="cursor-pointer text-sm text-gray-900 hover:text-blue-300"
+              >
+                Forget your password?
+              </p>
+            </div>
+            <div className="mb-6 flex items-center"></div>
             <button
-              className="linear w-full rounded-xl bg-brand-500 bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
+              className="linear w-full rounded-xl bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               type="submit"
             >
               Sign In
             </button>
           </form>
           <div className="mt-4 flex justify-center">
-            <span className="text-gray-700 text-sm font-medium">
+            <span className="text-sm font-medium text-gray-700">
               Not registered yet?
             </span>
             <a
