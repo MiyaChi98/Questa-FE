@@ -60,7 +60,8 @@ const RegisterOtpInput = (props: {
     })
     console.log(res)
     console.log(data)
-    onSubmit(data)
+    res.data.data ? onSubmit(data): toast.error('Mã OTP không đúng ')
+    setOtpInput(false)
   }
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {

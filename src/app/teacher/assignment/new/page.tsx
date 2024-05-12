@@ -43,6 +43,7 @@ const New_Assignment = () => {
     setCourseArray(res.data.data);
   };
   const onSubmit = async (data,formFields)=>{
+    console.log('ok')  
     for (let quiz of formFields) {
       for (let [key, value] of Object.entries(quiz)) {
         if(key!='img'&&key!='audio'){
@@ -96,7 +97,7 @@ const New_Assignment = () => {
   return (
     <>
       <form
-        className=" w-full h-full flex flex-row px-20 bg-background-100"
+        className="w-full h-fit flex flex-row justify-center items-center px-20 mt-5 bg-background-100"
         onSubmit={
           handleSubmit((data)=>{
             onSubmit(data,formFields)
@@ -111,19 +112,24 @@ const New_Assignment = () => {
         console.log(formFields)
       }}
       >
-        <AssignmentDisplay formFields={assignmentData} previewDisplay={previewDisplay} setPreviewDisplay={setPreviewDisplay} examData={examData}/>
+        <AssignmentDisplay 
+        formFields={assignmentData} 
+        previewDisplay={previewDisplay} 
+        setPreviewDisplay={setPreviewDisplay} 
+        examData={examData}
+        />
       </div>
-        <div className={`flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? 'hidden': ''}`}>
-        <div className="rounded-t-lg flex flex-row justify-between bg-blue-200 p-3">
+        <div className={`h-fit flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? 'hidden': ''}`}>
+        <div className="rounded-t-lg flex flex-row justify-between bg-gray-700 p-3">
             <div className="text-[20px] font-bold text-white">
               Thông tin đề kiểm tra 
             </div>
             <button
-            type='submit'
+            type='button'
             onClick={()=>{
               setcurrentNav(true)
             }}
-            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-blue-700 hover:text-white'>
               Tiếp tục
             </button>  
           </div>
@@ -296,8 +302,8 @@ const New_Assignment = () => {
             </div>
           </div>
         </div>
-        <div className={`flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? '':'hidden'}`}>
-          <div className="rounded-t-lg flex flex-row justify-between bg-blue-200 p-3">
+        <div className={`h-fit flex-auto border rounded-xl bg-white text-navy-700  ${currentNav? '':'hidden'}`}>
+          <div className="rounded-t-lg flex flex-row justify-between bg-gray-700 p-3">
             <div className="text-[20px] font-bold text-white">
               Thêm câu hỏi
               </div>
@@ -312,24 +318,22 @@ const New_Assignment = () => {
                 setAssignmentData(data)
               }
             }
-            className='p-1 px-2 min-w-[80px]  font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+            className='p-1 px-2 min-w-[80px]  font-bold rounded-md bg-white hover:bg-blue-700 hover:text-white'>
               Xem trước
             </button>
             <button
-            type='submit'
+            type='button'
             onClick={()=>{
               setcurrentNav(false)
             }}
-            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-blue-700 hover:text-white'>
               Quay lại
             </button>
+            {/* Submit button */}
             <button
             type='submit'
-            // onClick={()=>{
-            //   setcurrentNav(true)
-            // }}
-            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-brand-700 hover:text-white'>
-              Tiếp tục
+            className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-blue-700 hover:text-white'>
+              Lưu
             </button>
             </div>
           </div>

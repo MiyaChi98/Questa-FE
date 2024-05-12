@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
     if (!matchesAdminPath && !matchesTeacherPath ) {
       return NextResponse.next();
     } else {
-      redirectUrl.pathname = '/landing-page';
+      redirectUrl.pathname = '/student';
     }
   }
 

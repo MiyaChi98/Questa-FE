@@ -12,7 +12,7 @@ const ExamDropdown = ({ title, children }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div>{isOpen ?  <ChevronDown/>:<ChevronRight/>}</div>
-        <div className='ml-3 text-[20px]'>{title}</div>
+        <div className='ml-3 text-[20px] font-bold text-brand-700'>{title}</div>
       </div>
       {isOpen && (
         <div className="mt-2 pl-4 flex flex-col flex-wrap">

@@ -47,6 +47,7 @@ function Quiz(props: { formFields; setFormFields }) {
     return finalString;
   };
   const handleFileInput = async (event, index: number, name: string) => {
+    console.log(event.target.files)
     const file = event.target.files[0];
     console.log(file);
     const res = await api.post(
@@ -74,7 +75,6 @@ function Quiz(props: { formFields; setFormFields }) {
     } catch (error) {
       console.log(error);
     }
-    event.target.value = '';
   };
 
   const addFields = () => {
@@ -165,12 +165,16 @@ function Quiz(props: { formFields; setFormFields }) {
                     <ImgIcon />
                     <input
                       name="img"
-                      onChange={async (e) => {
+                      onInput={async (e) => {
+                        console.log('run through here')
                         handleFileInput(e, index, 'img');
                       }}
+                      onClick={(e) => {
+                        e.target.value = ''
+                        }}
                       type="file"
                       className="hidden"
-                      accept="image/png, image/jpeg"
+                      accept="image/*"
                     />
                   </label>
                   {/* Audio */}

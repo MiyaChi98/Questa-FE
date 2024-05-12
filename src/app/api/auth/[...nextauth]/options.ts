@@ -47,6 +47,7 @@ export const options: NextAuthOptions = {
         token.zone = user.zone;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token._id = user._id
       }
       return token;
     },
@@ -54,6 +55,7 @@ export const options: NextAuthOptions = {
       session.user.zone = token.zone;
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
+      session.user._id = token._id
       return {
         ...session,
       };

@@ -151,7 +151,7 @@ module.exports = {
       white: '#ffffff',
       black: '#000',
       background: {
-        100: 'rgb(244 247 254)',
+        100: '#d2f0ff',
         900: '#070f2e',
       },
       lightPrimary: '#F4F7FE',

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import CardMenu from 'components/card/CardMenu';
-import Checkbox from 'components/checkbox';
 import Card from 'components/card';
 
 import {
@@ -21,7 +19,9 @@ type RowObj = {
   _id: string;
   name: [string, boolean];
   course: string;
+  subject: string;
   submition: number;
+  avgScore: any;
   last_update: boolean;
 };
 
@@ -31,6 +31,7 @@ function CheckTable(props: {
   setCurrentPage
 }) {
   const { tableData, currentPage, setCurrentPage } = props;
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const api = useApi();
   let defaultData = tableData;
   const columns = [
@@ -39,8 +40,8 @@ function CheckTable(props: {
       header: () => (
         <div className="flex items-center">
           {/* <Checkbox/> */}
-          <p className="ml-3 text-sm font-bold text-gray-600 dark:text-white">
-            NAME
+          <p className="ml-3 text-sm font-bold text-brand-800 dark:text-white">
+            ĐỀ THI
           </p>
         </div>
       ),
@@ -56,8 +57,21 @@ function CheckTable(props: {
     columnHelper.accessor('course', {
       id: 'course',
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          ASSIGN TO
+        <p className="text-sm font-bold text-brand-800 dark:text-white">
+          LỚP
+        </p>
+      ),
+      cell: (info) => (
+        <p className="text-sm font-bold text-navy-700 dark:text-white">
+          {info.getValue()}
+        </p>
+      ),
+    }),
+    columnHelper.accessor('subject', {
+      id: 'subject',
+      header: () => (
+        <p className="text-sm font-bold text-brand-800 dark:text-white">
+          MÔN HỌC 
         </p>
       ),
       cell: (info) => (
@@ -69,8 +83,8 @@ function CheckTable(props: {
     columnHelper.accessor('submition', {
       id: 'submition',
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          SUBMITION
+        <p className="text-sm font-bold text-brand-800 dark:text-white">
+          SỐ BÀI NỘP 
         </p>
       ),
       cell: (info) => (
@@ -79,11 +93,25 @@ function CheckTable(props: {
         </p>
       ),
     }),
+    columnHelper.accessor('avgScore', {
+      id: 'avgScore',
+      header: () => (
+        <p className="text-sm font-bold text-brand-800 dark:text-white">
+          ĐIỂM TB
+        </p>
+      ),
+      cell: (info) => (
+        <p className={`text-sm font-bold text-navy-700 dark:text-white ${parseInt(info.getValue())>5?'text-green-700':'text-red-500'}`}>
+          {/* ${info.getValue() === 'Không có dữ liệu' ? 'text-gray-500':''} */}
+          {info.getValue()}
+        </p>
+      ),
+    }),
     columnHelper.accessor('last_update', {
       id: 'last_update',
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          LAST UPDATE
+        <p className="text-sm font-bold text-brand-800 dark:text-white">
+          LẦN CẬP NHẬT CUỐI 
         </p>
       ),
       cell: (info) => (
@@ -138,6 +166,7 @@ function CheckTable(props: {
     table
   }
   useEffect(() => {
+    console.log(defaultData)
     setData([...defaultData]);
     let children = document.querySelectorAll<HTMLInputElement>('.children');
     for (var i = 0; i < children.length; i++) {
@@ -147,7 +176,12 @@ function CheckTable(props: {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
   return (

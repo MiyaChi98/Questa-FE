@@ -2,7 +2,6 @@ import useApi from 'app/hooks/useApi';
 import React, { useState, useRef, useEffect } from 'react';
 import Countdown, { zeroPad} from 'react-countdown';
 import { toast } from 'react-toastify';
-import Completionist from './Completionist';
 
 const OtpInput = (props: {
     email: string;
@@ -66,7 +65,7 @@ const OtpInput = (props: {
     toast.success('Mật khẩu tạm thời đã được gửi về email của bạn')
     : null
   }
-  const renderer = ({ hours, minutes, seconds, completed }) => {
+  const renderer = ({ minutes, seconds, completed }) => {
     if (completed) {
       setOtpInput(false)
       // return <Completionist />;

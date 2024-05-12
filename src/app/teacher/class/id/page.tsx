@@ -118,7 +118,7 @@ const id = () => {
     replace(`${pathname}?${params.toString()}`);
   }, [currentCourseID, currentPage]);
   return (
-    <div className=" flex flex-col text-navy-700 px-10">
+    <div className=" flex flex-col text-navy-700 px-10 bg-background-100">
       <div className="flex h-12 flex-row rounded-se-full rounded-ss-full bg-white">
         <button
           id="class"
@@ -156,7 +156,9 @@ const id = () => {
           {course && course.course && (
             <p className="text-[16px]">Mã vào lớp : {course.course.code}</p>
           )}
-          <StudentTable tableData={tableData} />
+          {course && course.course && (
+          <StudentTable tableData={tableData} currentPage={currentPage} setCurrentPage={setCurrentPage} courseID={course.course._id}/>
+          )}
           <div className="mr-10 mt-3 grid justify-items-end text-black">
             <nav aria-label="Page navigation example">
               <ul className="list-style-none flex">

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import CardMenu from 'components/card/CardMenu';
-import Checkbox from 'components/checkbox';
 import Card from 'components/card';
 
 import {
@@ -19,6 +17,7 @@ import UpArrow from 'components/icons/UpArrow';
 import DownArrow from 'components/icons/DownArrow';
 import { FcDownload } from 'react-icons/fc';
 import Download from 'components/icons/DashCurveDown';
+import { toast } from 'react-toastify';
 
 type RowObj = {
   check: any;
@@ -30,13 +29,15 @@ type RowObj = {
 };
 
 function StudentTable(props: {
+  courseID,
   tableData: any;
-  //   currentPage: string;
-  //   setCurrentPage;
+    currentPage: string;
+    setCurrentPage;
 }) {
   const {
+    courseID,
     tableData,
-    //  currentPage, setCurrentPage
+    currentPage, setCurrentPage
   } = props;
   const api = useApi();
   const columns = [
@@ -136,16 +137,21 @@ function StudentTable(props: {
     const item = [];
     for (var i = 0; i < allChecked.length; i++) {
       if (allChecked[i].checked === true) {
-        // const res = await api.delete(`exam/${allChecked[i].value}`);
-        // console.log(res);
+        const res = await api.post(`user/course/${allChecked[i].value}`,
+          {
+            studentID: `${allChecked[i].value}`,
+            courseID: courseID
+          }
+        );
+        console.log(res);
         console.log(i, allChecked[i].checked, allChecked[i].value);
       }
     }
-    // if (parent.checked === true && parseInt(currentPage) > 1) {
-    //   parent.checked = false;
-    //   setCurrentPage((parseInt(currentPage) - 1).toString());
-    // } else window.location.reload();
-    // table;
+    if (parent.checked === true && parseInt(currentPage) > 1) {
+      parent.checked = false;
+      setCurrentPage((parseInt(currentPage) - 1).toString());
+    } else window.location.reload();
+    table;
   };
   useEffect(() => {
     setData(tableData);
@@ -166,7 +172,7 @@ function StudentTable(props: {
       <div
         id={popUpDisplay ? 'overlay' : ''}
         onClick={() => {
-          setPopUpDisplay(false);
+            setPopUpDisplay(false)
         }}
       >
         <Pop_Up_Assignment
@@ -201,7 +207,14 @@ function StudentTable(props: {
 
           <button
             onClick={() => {
-              setPopUpDisplay(true);
+              const allChecked = document.querySelectorAll<HTMLInputElement>('.children');
+              console.log(allChecked,allChecked.length)
+              for (var i = 0; i < allChecked.length; i++) {
+                if(allChecked[i].checked === true){
+                  setPopUpDisplay(true)
+                  break
+                }
+              }
             }}
             className="flex flex-row gap-3 rounded-md bg-gray-700 p-2 hover:bg-red-500"
           >

@@ -8,6 +8,7 @@ interface IUser extends DefaultUser {
   zone?: Role;
   accessToken: string;
   refreshToken: string;
+  _id: string
 }
 declare module 'next-auth' {
   interface User extends IUser {}

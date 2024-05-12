@@ -35,8 +35,8 @@ function SignInDefault() {
       if (res?.status != 200) {
         return toast.error('Wrong email or password');
       } else {
-        if (session.user.zone[0] === Role.ADMIN) {
-          push('/admin');
+        if (session.user.zone[0] === Role.STUDENT) {
+          push('/student');
         }
         if (session.user.zone[0] === Role.TEACHER) {
           push('/teacher');

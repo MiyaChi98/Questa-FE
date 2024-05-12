@@ -23,9 +23,10 @@ function Button(props:
           transition
            duration-200
             hover:${bg? `${bg}`:'bg-brand-600'}
+            hover:text-white
             ${
               focus === true ? 
-              `${bg? `${bg}`:'bg-brand-600'}`
+              `${bg? `${bg}`:'bg-brand-600'} text-white`
                : ''
             }  
              active:bg-brand-700

@@ -17,7 +17,7 @@ function InputField(props: {
   register: UseFormRegister<FieldValues>;
   maxLength: number;
   minLength: number;
-  pattern: {
+  pattern?: {
     rule: string,
     pattern: RegExp
   };
@@ -40,7 +40,6 @@ function InputField(props: {
     minLength,
     pattern,
   } = props;
-
   return (
     <div className={`${extra}`}>
       <label
@@ -69,7 +68,7 @@ function InputField(props: {
             message: `Max length of this field is ${minLength}`,
           },
           pattern: {
-            value: pattern.pattern,
+            value:  pattern.pattern,
             message: `${pattern.rule}`,
           },
         })}

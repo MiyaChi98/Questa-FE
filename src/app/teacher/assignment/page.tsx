@@ -5,6 +5,8 @@ import useApi from 'app/hooks/useApi';
 import Button from 'components/button/button';
 import { toast } from 'react-toastify';
 import CheckTables from 'components/teacher/CheckTables';
+import PlusIcon from 'components/icons/PlusIcon';
+import SmallPlusIcon from 'components/icons/SmallPlusIcon';
 
 
 const Assignment = () => {
@@ -57,16 +59,23 @@ const Assignment = () => {
     <div className=" w-full h-full flex flex-col justify-end px-20 bg-background-100">
       <div className="grid mb-3 justify-items-end">
         <button 
-        className='min-w-[80px] min-h-[50px] p-3 rounded-md bg-brand-700'
-        ><a href="assignment/new">Add new assignment</a>
+        className='min-w-[80px] place-contents-center place-items-center h-fit p-2 rounded-md text-white bg-brand-500 hover:bg-brand-700 shadow-lg'
+        >
+          <a 
+        href="assignment/new"
+        className='flex flex-row'
+        >
+          <SmallPlusIcon/>
+          Tạo lớp học 
+          </a>
         </button>
       </div>
       <CheckTables tableData={TableData} currentPage = {currentPage} setCurrentPage = {setCurrentPage} />
       <div className="mr-10 mb-10 mt-3 grid justify-items-end">
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example"> 
           <ul className="list-style-none flex">
             <li onClick={() => handleClick(-1)}>
-              <Button name="Previous" small={false} textcolor={''} bg={''} />
+              <Button name="Previous" small={false} textcolor={'navy-700'} bg={''} />
             </li>
             {pageNumbers.map((page) => {
               return (
@@ -74,12 +83,12 @@ const Assignment = () => {
                   <Button
                     name={page.toString()}
                     small={true}
-                    focus={currentPage === page.toString()} textcolor={''} bg={''}                  />
+                    focus={currentPage === page.toString()} textcolor={'navy-700'} bg={''}                  />
                 </li>
               );
             })}
             <li onClick={() => handleClick(0)}>
-              <Button name="Next" small={false} textcolor={''} bg={''} />
+              <Button name="Next" small={false} textcolor={'navy-700'} bg={''} />
             </li>
           </ul>
         </nav>
