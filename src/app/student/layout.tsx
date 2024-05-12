@@ -1,19 +1,17 @@
 'use client';
 // Layout components
 import { usePathname } from 'next/navigation';
-import { useContext, useState } from 'react';
-import {teacher} from 'routes';
+import { useState } from 'react';
+import {student} from 'routes';
 import {
   getActiveNavbar,
   getActiveRoute,
-  isWindowAvailable,
 } from 'utils/navigation';
 import React from 'react';
 import Navbar from 'components/navbar';
 import Sidebar from 'components/sidebar';
-import Footer from 'components/footer/Footer';
 
-export default function Teacher({ children }: { children: React.ReactNode }) {
+export default function Student({ children }: { children: React.ReactNode }) {
   // states and functions
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -21,10 +19,10 @@ export default function Teacher({ children }: { children: React.ReactNode }) {
   return (
       <div className="flex h-full w-full bg-background-100">
         <Sidebar
-          routes={teacher}
+          routes={student}
           open={open}
           setOpen={setOpen}
-          variant="teacher"
+          variant="student"
         />
         {/* Navbar & Main Content */}
         <div 
@@ -37,8 +35,8 @@ export default function Teacher({ children }: { children: React.ReactNode }) {
             className='h-full w-full flex flex-col '>
               <Navbar
                 onOpenSidenav={() => setOpen(!open)}
-                brandText={getActiveRoute(teacher, pathname)}
-                secondary={getActiveNavbar(teacher, pathname)}
+                brandText={getActiveRoute(student, pathname)}
+                secondary={getActiveNavbar(student, pathname)}
               />
               <div 
               className="mx-auto h-[100vh-96px] w-full !pt-[10px] md:p-2 overflow-scroll overflow-x-hidden"

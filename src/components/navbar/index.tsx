@@ -1,6 +1,5 @@
 import React from 'react';
-import Dropdown from 'components/dropdown';
-import NavLink from 'components/link/NavLink';
+import avatar from '/public/img/avatars/avatar11.png';
 import useApi from 'app/hooks/useApi';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -66,18 +65,18 @@ const Navbar = (props: {
         </p> */}
       </div>
 
-      {user&&imgUrl?
+      {user?
       <div className="flex flex-row mt-[3px] mx-3 px-5 flex h-[61px] w-fit items-center justify-end gap-2 rounded-full bg-white shadow-xl shadow-shadow-500">
          <div className='flex flex-col items-center justify-center'>
           <span className='text-gray-700 text-[16px]'>{user.name}</span>
-          <span className='text-navy-700 font-bold text-[12px]'>{user.zone}</span>
+          <span className='text-navy-700 font-bold text-[12px]'>{user.zone==='teacher'? 'Giáo viên': 'Học sinh'}</span>
          </div>
          <div className='p-1 bg-gray-100 rounded-full'>
          <Image
               width="2"
               height="20"
               className="h-10 w-10 rounded-full"
-              src={imgUrl}
+              src={imgUrl? imgUrl: avatar}
               alt="Elon Musk"
             />
          </div>

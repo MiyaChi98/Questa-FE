@@ -58,6 +58,9 @@ const Banner = (props: { user,setUser,setImgUrl, img: string; name: string; role
                 onChange={async (e) => {
                   handleFileInput(e);
                 }}
+                onClick={async (e) => {
+                  e.target.value = ''
+                }}
                 type="file"
                 className="hidden"
                 accept="image/png, image/jpeg"

@@ -70,3 +70,30 @@ export const teacher = [
   }
 ]
 
+export const student = [
+  // {
+  //   name: 'Đề kiểm tra',
+  //   layout: '/teacher',
+  //   icon: <MdAssignmentAdd className="h-6 w-6" />,
+  //   path: 'assignment',
+  // },
+  {
+    name: 'Hồ sơ lớp học',
+    layout: '/student',
+    icon: <MdClass className="h-6 w-6" />,
+    path: 'class',
+  },
+  {
+    name: 'Dữ liệu học thuật',
+    layout: '/student',
+    icon: <MdLibraryBooks className="h-6 w-6" />,
+    path: 'content',
+  },
+  {
+    name: 'Hồ sơ cá nhân',
+    layout: '/student',
+    path: 'profile',
+    icon: <MdPerson className="h-6 w-6" />,
+  }
+]
+

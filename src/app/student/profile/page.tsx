@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { NoRuleRegex } from 'constants/Regex/norule.regex';
 import RegisterOtpInput from 'components/teacher/RegisterOtpInput';
 
-const ProfileOverview = () => {
+const Profile= () => {
   const {
     register,
     handleSubmit,
@@ -121,12 +121,12 @@ const ProfileOverview = () => {
        )
        : null}
       </div>
-      {user? (
+      {user ? (
         <Banner img={imgUrl} name={user.name} role={user.zone[0]} user={user} setUser={setUser} setImgUrl={setImgUrl}/>
       ) : null}
       <div className="flex w-full flex-col px-10">
         {/* <General /> */}
-        {user? (
+        {user ? (
           <form
             className="flex h-full w-full flex-row gap-10"
             onSubmit={handleSubmit(preSubmit)}
@@ -257,4 +257,4 @@ const ProfileOverview = () => {
   );
 };
 
-export default ProfileOverview;
+export default Profile;

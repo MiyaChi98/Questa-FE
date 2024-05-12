@@ -100,6 +100,7 @@ const New_Assignment = () => {
         className="w-full h-fit flex flex-row justify-center items-center px-20 mt-5 bg-background-100"
         onSubmit={
           handleSubmit((data)=>{
+            console.log('handleSubmit')
             onSubmit(data,formFields)
           })
         }
@@ -145,7 +146,7 @@ const New_Assignment = () => {
               name="title"
               register={register}
               maxLength={20}
-              minLength={6}
+              minLength={1}
               pattern={NameRegex}
               require={true}
             />
@@ -332,6 +333,9 @@ const New_Assignment = () => {
             {/* Submit button */}
             <button
             type='submit'
+            onClick={()=>{
+              console.log('clicked')
+            }}
             className='min-w-[60px] p-1 px-2 font-bold rounded-md bg-white hover:bg-blue-700 hover:text-white'>
               Lưu
             </button>
