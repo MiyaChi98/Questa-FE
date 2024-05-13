@@ -66,7 +66,7 @@ const Assignment = () => {
         className='flex flex-row'
         >
           <SmallPlusIcon/>
-          Tạo lớp học 
+          Tạo đề thi
           </a>
         </button>
       </div>

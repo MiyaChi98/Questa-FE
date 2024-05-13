@@ -2,13 +2,13 @@
 import InputField from '../../../components/fields/InputField';
 import { FcGoogle } from 'react-icons/fc';
 import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn,signOut , useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { EmailRegex } from 'constants/Regex/email.regex';
 import { PasswordRegex } from 'constants/Regex/password.regex';
 import { Role } from 'constants/Enum/role.enum';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OtpInput from 'components/teacher/OtpInput';
 import useApi from 'app/hooks/useApi';
 
@@ -22,6 +22,7 @@ function SignInDefault() {
   } = useForm();
   const api = useApi();
   const { data: session } = useSession();
+  const [logoutCalled, setLogoutCalled] = useState(false);
   const [otpInput, setOtpInput] = useState(false);
   const data = watch();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -35,12 +36,7 @@ function SignInDefault() {
       if (res?.status != 200) {
         return toast.error('Wrong email or password');
       } else {
-        if (session.user.zone[0] === Role.STUDENT) {
-          push('/student');
-        }
-        if (session.user.zone[0] === Role.TEACHER) {
-          push('/teacher');
-        }
+        push('/authorization')
       }
     } catch (error) {
       console.log(error);
@@ -48,16 +44,21 @@ function SignInDefault() {
     }
   };
   const handleForgetPassword = async () => {
-    const res = await api.post('mail/sendOTP', {
-      email: data.email,
-    });
-    if(res.status === 201)
-    {
+    try {
+      const res = await api.post('mail/sendOTP', {
+        email: data.email,
+      });
       setOtpInput(true)
+    } catch (error) {
+      toast(error.response.data.detail.message)
     }
-    else toast.error('eh');
-    console.log(res);
   };
+  useEffect(()=>{
+    // if (!logoutCalled) {
+    //   signOut(); 
+    //   setLogoutCalled(true); 
+    // }
+  },[])
   return (
     <div className="flex w-full items-center justify-center rounded-2xl border border-2 bg-white px-16 py-7">
       <div

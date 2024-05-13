@@ -6,31 +6,37 @@ import { Role } from './constants/Enum/role.enum';
 export async function middleware(request: NextRequest) {
   const redirectUrl = request.nextUrl;
   const hasSessionToken = request.cookies.has('next-auth.session-token');
-  const adminPaths = ['/admin'];
+  const authorizationPath = ['/authorization']
+  const studentPaths = ['/student'];
   const teacherPaths = ['/teacher'];
-  const matchesAdminPath = adminPaths.some((path) =>
+  const matchesAuthorizationPath = authorizationPath.some((path) =>
     redirectUrl.pathname.startsWith(path),
   );
   const matchesTeacherPath = teacherPaths.some((path) =>
   redirectUrl.pathname.startsWith(path),
 );
+const matchesStudentPath = studentPaths.some((path) =>
+  redirectUrl.pathname.startsWith(path),
+);
   const token = await getToken({ req: request });
-  const isAdmin = hasSessionToken && matchesAdminPath && !matchesTeacherPath && token.zone[0] === Role.ADMIN;
-  const isTeacher = hasSessionToken && matchesTeacherPath && !matchesAdminPath && token.zone[0] === Role.TEACHER;
-
-  if (isAdmin || isTeacher) {
+  const isAuthorization = hasSessionToken && matchesAuthorizationPath && !matchesTeacherPath && !matchesStudentPath;
+  const isStudent = hasSessionToken && matchesStudentPath && !matchesTeacherPath && token.zone[0] === Role.STUDENT;
+  const isTeacher = hasSessionToken && matchesTeacherPath && !matchesStudentPath && token.zone[0] === Role.TEACHER;
+if(isAuthorization){
+  if(token.zone[0] === Role.STUDENT){
+    redirectUrl.pathname = 'student'
+  } 
+  if(token.zone[0] === Role.TEACHER){
+    redirectUrl.pathname = 'teacher'
+  } 
+  return NextResponse.redirect(redirectUrl);
+}
+  if (isStudent || isTeacher) {
     return NextResponse.next();
   }
   if (!hasSessionToken) {
     redirectUrl.pathname = '/auth/sign-in';
-  } else {
-    if (!matchesAdminPath && !matchesTeacherPath ) {
-      return NextResponse.next();
-    } else {
-      redirectUrl.pathname = '/student';
-    }
   }
-
   return NextResponse.redirect(redirectUrl);
 }
 

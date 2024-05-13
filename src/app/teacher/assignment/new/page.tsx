@@ -8,6 +8,7 @@ import { NameRegex } from 'constants/Regex/name.regex';
 import { Phone_NumberRegex } from 'constants/Regex/phone-number.regex';
 import { useEffect, useState } from 'react';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { onChange } from 'react-toastify/dist/core/store';
 import renderMathInElement from 'utils/renderMath.mjs';
 
@@ -55,11 +56,16 @@ const New_Assignment = () => {
   }
     data['total_time'] = parseInt(data['total_time'])
     data['total_mark'] = parseInt(data['total_mark'])
-    const createExamRes = await api.post(`exam`,{
-      ...data,
-      quizArray: formFields
-    })
-    console.log(createExamRes)
+    try {
+      const createExamRes = await api.post(`exam`,{
+        ...data,
+        quizArray: formFields
+      })
+      console.log(createExamRes)
+      
+    } catch (error) {
+      toast(error.response.data.detail.message)
+    }
   };
   const examData = watch()
   const preStringProcessor = (inputString) =>{

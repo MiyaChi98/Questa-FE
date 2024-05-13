@@ -145,7 +145,7 @@ const AssignmentDisplay = (props: {
                         value="A"
                         onChange={(event) => handleChange(event, index)}
                         className="peer hidden"
-                        required
+                        // required
                       />
                       <label
                         htmlFor={`${index}_display_answer_A`}
@@ -168,7 +168,7 @@ const AssignmentDisplay = (props: {
                         value="C"
                         onChange={(event) => handleChange(event, index)}
                         className="peer hidden"
-                        required
+                        // required
                       />
                       <label
                         htmlFor={`${index}_display_answer_C`}
@@ -195,7 +195,7 @@ const AssignmentDisplay = (props: {
                         value="B"
                         onChange={(event) => handleChange(event, index)}
                         className="peer hidden"
-                        required
+                        // required
                       />
                       <label
                         htmlFor={`${index}_display_answer_B`}
@@ -219,7 +219,7 @@ const AssignmentDisplay = (props: {
                         value="D"
                         onChange={(event) => handleChange(event, index)}
                         className="peer hidden"
-                        required
+                        // required
                       />
                       <label
                         htmlFor={`${index}_display_answer_D`}

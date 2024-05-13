@@ -1,18 +1,47 @@
-'use client';
 import useApi from 'app/hooks/useApi';
+import React, { useEffect, useState } from 'react';
 
-function Pop_Up_Assignment(props: {
-  examId?: string[];
-  display: boolean;
-  setPopUpDisplay
-  handleDelete
-}) {
-  const {display, examId,setPopUpDisplay } = props;
+const SubmitPopUp = (props: {
+  display;
+  setDisplay;
+  submitData;
+  examId: string;
+  violations: number;
+}) => {
+  const { display, setDisplay, submitData, examId, violations } = props;
   const api = useApi();
-  const handleClick = async ()=>{
-    // const res = await api.delete(`user/${examId}`)
+  const [unDone,setUnDone] = useState(0)
+  const handlePage = ()=>{
+    let numberofUnDoneQuiz = 0
+    for(const form of submitData){
+        console.log(form.answer)
+        if (!form.answer) {
+            numberofUnDoneQuiz++
+        }
+    }
+    console.log(submitData)
+      setUnDone(numberofUnDoneQuiz)
   }
-  return (
+  const onSubmit = async () => {
+    try {
+      const res = await api.post('submit',
+      {
+        examId: examId,
+        violations: violations,
+        submitAnswer: {
+          array: submitData
+        }
+      }
+      )
+
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  useEffect(()=>{
+    display? handlePage():null 
+  },[display])
+  return(
     <div
     className={`${
       display ? '' : 'hidden'
@@ -35,7 +64,8 @@ function Pop_Up_Assignment(props: {
         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
           <h3 className="text-base text-xl font-semibold leading-6 text-gray-900" id="modal-title">Delete account</h3>
           <div className="mt-2">
-            <p className="text-xl text-gray-500">Are you sure you want to delete this assignment? This action will permanently removed and cannot be undone.</p>
+            <p className="text-xl text-gray-500">Hệ thống phát hiện bạn vẫn còn {unDone} câu hỏi chưa hoàn thiện. </p>
+            <p className="text-xl text-gray-500">Hãy xác nhận nếu bạn muốn nộp bài.</p>
           </div>
         </div>
       </div>
@@ -43,8 +73,8 @@ function Pop_Up_Assignment(props: {
     <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
       <button 
       onClick={()=> {
-        setPopUpDisplay(false)
-        props.handleDelete()
+        onSubmit()
+        setDisplay(false)
       }
     }
       type="button" 
@@ -57,6 +87,6 @@ function Pop_Up_Assignment(props: {
     </div>
     </div>
   );
-}
+};
 
-export default  Pop_Up_Assignment;
+export default SubmitPopUp;
