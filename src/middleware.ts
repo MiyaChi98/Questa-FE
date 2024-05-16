@@ -6,9 +6,13 @@ import { Role } from './constants/Enum/role.enum';
 export async function middleware(request: NextRequest) {
   const redirectUrl = request.nextUrl;
   const hasSessionToken = request.cookies.has('next-auth.session-token');
+  const defaultPath = ['/']
   const authorizationPath = ['/authorization']
   const studentPaths = ['/student'];
   const teacherPaths = ['/teacher'];
+  const matchesDefaultPath = defaultPath.some((path) =>
+    redirectUrl.pathname.startsWith(path),
+  );
   const matchesAuthorizationPath = authorizationPath.some((path) =>
     redirectUrl.pathname.startsWith(path),
   );
@@ -19,10 +23,16 @@ const matchesStudentPath = studentPaths.some((path) =>
   redirectUrl.pathname.startsWith(path),
 );
   const token = await getToken({ req: request });
+  if(matchesDefaultPath){
+    redirectUrl.pathname = '/auth/sign-in';
+  }
+  if (!hasSessionToken) {
+    redirectUrl.pathname = '/auth/sign-in';
+  }
   const isAuthorization = hasSessionToken && matchesAuthorizationPath && !matchesTeacherPath && !matchesStudentPath;
   const isStudent = hasSessionToken && matchesStudentPath && !matchesTeacherPath && token.zone[0] === Role.STUDENT;
   const isTeacher = hasSessionToken && matchesTeacherPath && !matchesStudentPath && token.zone[0] === Role.TEACHER;
-if(isAuthorization){
+  if(isAuthorization){
   if(token.zone[0] === Role.STUDENT){
     redirectUrl.pathname = 'student'
   } 
@@ -33,9 +43,6 @@ if(isAuthorization){
 }
   if (isStudent || isTeacher) {
     return NextResponse.next();
-  }
-  if (!hasSessionToken) {
-    redirectUrl.pathname = '/auth/sign-in';
   }
   return NextResponse.redirect(redirectUrl);
 }

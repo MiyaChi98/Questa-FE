@@ -10,17 +10,20 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useEffect, useState } from 'react';
 import Radio from 'components/radio';
 import useApi from 'app/hooks/useApi';
+import { NoRuleRegex } from 'constants/Regex/norule.regex';
 
 function Form(props: {
-  type: 'create' | 'update';
+  type: string;
   courseId?: string;
   display: boolean;
   setFormdisplay;
+  setFormType;
+  setCourseId
 }) {
-  const { type, display, courseId , setFormdisplay} = props;
+  const { type, display, courseId , setFormdisplay,setFormType,setCourseId} = props;
   const {
     register,
-    setValue,
+    watch,
     handleSubmit,
     reset,
     formState: { errors },
@@ -34,6 +37,7 @@ function Form(props: {
   });
   const isUpdate = type === 'update';
   async function handleUpdate() {
+    console.log(courseId)
     const res = await api.get(`course/${courseId}`);
     console.log(courseId, res);
     if (res.status == 200) {
@@ -42,15 +46,30 @@ function Form(props: {
     }
     return;
   }
+  const filterEmptyFields = (obj: { [key: string]: any }): { [key: string]: any } => {
+    const filteredObj: { [key: string]: any } = {};
+    
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (value !== undefined && value !== null && value !== '') {
+                filteredObj[key] = value;
+            }
+        }
+    }
+    
+    return filteredObj;
+}
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     console.log(data);
     console.log('on submit');
     if (isUpdate) {
       console.log('update');
       console.log(data);
+      const updateData = filterEmptyFields(data)
       const res = await api.patch(`course/${courseId}`, {
-        ...data,
+        ...updateData,
       });
       if (res.data.data.response) {
         const message =
@@ -61,9 +80,12 @@ function Form(props: {
         toast.error(`Error :  ${message}`);
       } else {
         toast.success('Updated!');
-        reset();
       }
       console.log(res);
+      reset();
+      setFormdisplay(false)
+      // setCourseId('')
+      // setFormType('create')
     } else {
       console.log('create');
         const res = await api.post('course', {
@@ -81,13 +103,14 @@ function Form(props: {
         } else {
           toast.success('Created!');
           setFormdisplay(false)
-          reset();
         }
+        reset();
+
     }
   };
   useEffect(() => {
     reset();
-    handleUpdate();
+    isUpdate? handleUpdate():null;
     console.log(defaultValue);
   }, [courseId, display]);
 
@@ -104,7 +127,7 @@ function Form(props: {
         }}
       >
         <div className="relative mb-[3vh] flex h-full w-full items-center justify-center px-2 ">
-          <button
+          {/* <button
             type="button"
             className="absolute top-0 right-2 mt-3 inline-flex w-full justify-center rounded-md bg-red px-3 py-2 text-sm font-semibold text-xl text-cyan-300 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
             onClick={() => {
@@ -114,7 +137,7 @@ function Form(props: {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
-          </button>
+          </button> */}
           <div className=" w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
             <h3 className="justify-end mb-5 text-4xl font-bold uppercase text-navy-700 text-indigo-900">
               {type==='create'? 'Tạo lớp học': 'Sửa thông tin lớp học'}
@@ -133,10 +156,10 @@ function Form(props: {
                 type="text"
                 name="courseName"
                 defaultValue={defaultValue.courseName ? defaultValue.courseName : ''}
-                require={isUpdate!}
+                require={isUpdate? false:true}
                 register={register}
                 maxLength={50}
-                minLength={6}
+                minLength={3}
                 pattern={NameRegex}
               />
 
@@ -150,12 +173,12 @@ function Form(props: {
                 id="description"
                 type="text"
                 name="courseDescription"
-                require={isUpdate!}
+                require={isUpdate? false:true}
                 defaultValue={defaultValue.courseDescription ? defaultValue.courseDescription : ''}
                 register={register}
                 maxLength={100}
-                minLength={6}
-                pattern={NameRegex}
+                minLength={1}
+                pattern={NoRuleRegex}
               />
               <ErrorMessage errors={errors} name="email" />
               {/* Grade */}
@@ -164,22 +187,20 @@ function Form(props: {
                 label="Khối*"
                 label_color='indigo'
                 placeholder="Khối của lớp học"
-                require={isUpdate!}
+                require={isUpdate? false:true}
                 defaultValue={defaultValue.grade ? defaultValue.grade : ''}
                 id="grade"
                 type="number"
                 name="grade"
                 register={register}
-                maxLength={2}
-                minLength={1}
-                pattern={Phone_NumberRegex}
-              />
-              <ErrorMessage errors={errors} name="phone" />
-              <button
+                maxLength={50}
+                minLength={0}
+                pattern={NoRuleRegex}
+              />              <button
                 className="linear w-full rounded-xl bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
                 type="submit"
               >
-                Tạo lớp
+                {isUpdate? 'Xác nhận':'Tạo lớp'}
               </button>
             </form>
           </div>

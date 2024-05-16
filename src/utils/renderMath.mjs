@@ -105,7 +105,7 @@ var renderMathInText = function renderMathInText(text, optionsCopy) {
       // container.display = 'inline-block'
       container.style.fontFamily = 'serif'
       var display = document.createElement("span");
-      display.contentEditable = false
+      // display.contentEditable = false
       var content = document.createElement("span");
       var blankSpace =document.createElement("span");
       blankSpace.innerHTML= '&nbsp'
@@ -120,7 +120,7 @@ var renderMathInText = function renderMathInText(text, optionsCopy) {
       container.appendChild(begin)
       container.appendChild(display)
       container.appendChild(end)
-      container.appendChild(blankSpace)
+      // container.appendChild(blankSpace)
       container
       // \(c^2 = a^2 + b^2\)
       var math = data[i].data; // Override any display mode defined in the settings with that

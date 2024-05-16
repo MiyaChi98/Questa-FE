@@ -12,6 +12,7 @@ import instance from 'config/axios.config';
 import { useState } from 'react';
 import useApi from 'app/hooks/useApi';
 import RegisterOtpInput from 'components/teacher/RegisterOtpInput';
+import { useRouter } from 'next/router';
 
 function SignInDefault() {
   const {
@@ -21,6 +22,7 @@ function SignInDefault() {
     control,
     formState: { errors },
   } = useForm();
+  // const { push } = useRouter();
   const api = useApi();
   const [otpInput, setOtpInput] = useState(false);
   const data = watch()
@@ -48,8 +50,9 @@ function SignInDefault() {
         },
       );
       return toast.success(`Đăng kí thành công`);
-    } catch {
-      return toast.error(`Đăng kí lỗi , có vẻ đã có tài khoản được đăng kí với email này`);
+      // push('/sign-in')
+    } catch(error) {
+      return toast.error(error.response.data.detail.message);
     }
   };
   const handleSignUP = async () => {
@@ -167,6 +170,11 @@ function SignInDefault() {
               minLength={0}
               pattern={Phone_NumberRegex} require={true}            />
             <ErrorMessage errors={errors} name="phone" />
+            <label
+        className={`text-indigo-900 ml-1.5 font-medium`}
+      >
+        Chức vụ*
+      </label>
             <Controller
                 control={control}
                 name="role"
@@ -174,7 +182,7 @@ function SignInDefault() {
                   <select
                     id="role"
                     onChange={onChange}
-                    className="mb-3 w-full appearance-none rounded-md border bg-white p-2.5 text-indigo-900 shadow-sm outline-none focus:border-indigo-600"
+                    className="mb-3 mt-1 w-full appearance-none rounded-xl border bg-white p-2.5 text-indigo-900 shadow-sm outline-none focus:border-indigo-600"
                   >
                     <option value="">Chọn chức vụ của bạn </option>
                     <option 
@@ -190,7 +198,7 @@ function SignInDefault() {
                   </select>
                 )}
               />
-            <div className="mb-6 flex items-center">
+            <div className="mb-2 flex items-center">
           </div>
             <button
               className="linear w-full rounded-xl bg-cyan-300 py-3 text-base font-medium text-white text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"

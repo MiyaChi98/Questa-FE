@@ -12,6 +12,8 @@ import renderMathInElement from 'utils/renderMath.mjs';
 import MathIcon from 'components/icons/MathIcon';
 import MathInput from 'react-math-keyboard';
 import Render_Math from './Math_Render';
+import { BsPlus, BsPlusCircleDotted, BsPlusLg } from 'react-icons/bs';
+import { HiLightBulb, HiOutlineLightBulb } from 'react-icons/hi';
 
 function Quiz(props: { formFields; setFormFields }) {
   const { formFields, setFormFields } = props;
@@ -36,13 +38,18 @@ function Quiz(props: { formFields; setFormFields }) {
     console.log(data);
   };
   const preStringProcessor = (inputString) => {
+    //katex value
     const regex = /\*katex\*([^*]+?)\*katex\*/g;
+    //default browser convert katex to text content
     const regex1 = /\*begin\*([^*]+?)\*end\*/g;
+    //check once last time
+    const regex2 = /\*begin\*([^\s]+?)\s([^*]+?)\*end\*/g;
     const processedString = inputString.replace(regex, (match, content) => {
       console.log(String.raw`\(${content}\)`);
       return String.raw`\(${content}\)`;
     });
-    const finalString = processedString.replace(regex1, '');
+    const deleteDefaultBrowserConvertKatex = processedString.replace(regex1, '');
+    const finalString = deleteDefaultBrowserConvertKatex.replace(regex1, '');
     console.log(finalString);
     return finalString;
   };
@@ -87,6 +94,7 @@ function Quiz(props: { formFields; setFormFields }) {
       C: '',
       D: '',
       answer: '',
+      explain:''
     };
     setFormFields([...formFields, object]);
   };
@@ -138,7 +146,7 @@ function Quiz(props: { formFields; setFormFields }) {
           cursorPosition={cursorPosition}
         />
       </div>
-      <div className="mt-3 flex flex-col place-items-center gap-5 p-3 px-7 rounded-md">
+      <div className="mt-3 flex flex-col place-items-center gap-2 p-3 px-7 rounded-md">
         {formFields.map((form, index) => {
           if (form === null) {
             return;
@@ -146,7 +154,7 @@ function Quiz(props: { formFields; setFormFields }) {
           return (
             <div
               key={index}
-              className="mb-5 w-full border bg-slate/10 text-navy-700 rounded-md"
+              className="mb-2 w-full border bg-slate/15 text-navy-700 text-[16px] rounded-md"
             >
               <div className="flex flex-row bg-slate/20 content-center justify-between rounded-se-md rounded-ss-md">
                 <p className="m-2 text-[21px] font-bold ">Câu {index + 1}:</p>
@@ -203,8 +211,8 @@ function Quiz(props: { formFields; setFormFields }) {
                 </div>
               </div>
               <hr className="h-0.5 bg-gray-500" />
-              {/* Question,Img,Audio */}
-              <div className="my-2 flex h-full w-full flex-col gap-2 p-2 text-[20px]">
+              <div className="my-2 flex h-full w-full flex-col gap-2 p-2 text-[16px]">
+                {/* Question,Img,Audio */}
                 <div className="flex flex-col place-content-center place-items-center gap-2">
                   <div
                     id={`${index}_question`}
@@ -287,7 +295,7 @@ function Quiz(props: { formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_A`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 text-[20px] cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         A
                       </label>
@@ -320,7 +328,7 @@ function Quiz(props: { formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_C`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 text-[20px] cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         C
                       </label>
@@ -356,7 +364,7 @@ function Quiz(props: { formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_B`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 text-[20px] cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3 font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         B
                       </label>
@@ -389,7 +397,7 @@ function Quiz(props: { formFields; setFormFields }) {
                       />
                       <label
                         htmlFor={`${index}_answer_D`}
-                        className="h-10 w-10 cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3  font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
+                        className="h-10 w-10 text-[20px] cursor-pointer place-content-center rounded-full border border-gray-200 bg-white p-3  font-bold text-indigo-900 hover:border-gray-600 hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white"
                       >
                         D
                       </label>
@@ -410,15 +418,35 @@ function Quiz(props: { formFields; setFormFields }) {
                     </div>
                   </div>
                 </div>
+                {/* Explain */}
+                <span className='flex flex-row ml-1 gap-1 text-blue-500'><HiOutlineLightBulb/> <span>Giải thích</span></span> 
+                <div className='flex flex-col place-content-center place-items-center font-thin gap-1'>
+                  <div
+                    id={`${index}_explain`}
+                    contentEditable={true}
+                    onInput={(event) => {
+                      handleChange(event, index, 'explain');
+                    }}
+                    onFocus={(event) => {
+                      setonFocus(event.target.id);
+                      console.log(onFocus);
+                    }}
+                    onSelect={()=>{
+                      getRange(onFocus)
+                    }}
+                    className=" min-h-16 w-full bg-white p-2.5 text-gray-900 outline-none focus:outline focus:outline-offset-2 focus:outline-blue-500"
+                  ></div>
+                </div>
               </div>
             </div>
           );
         })}
         <button
-          className="rounded-full bg-indigo-400 text-white hover:bg-indigo-900"
+          className="flex flex-row items-center justify-center gap-1 rounded-md bg-blue-400 font-medium text-white text-[20px] hover:bg-indigo-700 p-2"
           onClick={addFields}
         >
-          <PlusIcon />
+          {/* <PlusIcon /> */}
+          <BsPlusLg/> Thêm câu hỏi 
         </button>
       </div>
     </>

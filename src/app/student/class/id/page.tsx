@@ -37,9 +37,9 @@ const page = () => {
     handlePage();
   }, [currentCourseID]);
   return (
-    <div className={`flex h-full w-full flex-col gap-3 font-sans`}>
+    <div className={`flex h-full w-full flex-col px-10 gap-3 font-sans`}>
       <div className="flex flex-row justify-between">
-        <p className="text-[20px] font-bold">Danh sách đã giao</p>
+        <p className="text-[20px] font-medium text-navy-700"></p>
         <div className="relative">
           <input
             type="text"
@@ -62,7 +62,7 @@ const page = () => {
           </svg>
         </div>
       </div>
-      <div className="h-fit w-full flex flex-col gap-3 bg-white text-navy-700 px-10 py-5">
+      <div className="h-fit w-full flex flex-col items-center justify-center gap-3 bg-white text-navy-700 rounded-xl py-5">
         {examData !== undefined &&
           examData.map((exam) => {
             return (

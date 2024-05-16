@@ -13,6 +13,7 @@ import ChangeDetail from 'components/icons/ChangeDetail';
 import DeleteIcon from 'components/icons/DeleteIcon';
 import useApi from 'app/hooks/useApi';
 import Pop_Up_Assignment from './Pop_Up_Assignment';
+import DropdownSearch from 'components/dropdown';
 
 type RowObj = {
   check: any;
@@ -193,27 +194,9 @@ function CheckTable(props: {
     </div>
     <Card extra={'w-full h-full sm:overflow-auto px-10'} bgColor = {'bg-white'}>
       <header className="relative flex items-center justify-between pt-4">
-      <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="min-w-72 rounded-md border border-gray-300 px-4 py-2 pr-10 transition-colors hover:border-gray-400 focus:border-blue-500 focus:outline-none"
-            />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 transform text-gray-400"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          </div>
+      <DropdownSearch
+          type='exam'
+          />
         <button 
         onClick={()=>{
           setPopUpDisplay(true)

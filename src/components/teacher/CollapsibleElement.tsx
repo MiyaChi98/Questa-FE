@@ -15,7 +15,7 @@ const CollapsibleElement = ({ title, children }) => {
         <div>{isOpen ?  <ChevronDown/>:<ChevronRight/>}</div>
       </div>
       {isOpen && (
-        <div className="p-3 grid grid-cols-5">
+        <div className="p-3 grid grid-cols-3">
           {children}
         </div>
       )}

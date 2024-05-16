@@ -33,6 +33,7 @@ const New_Assignment = () => {
       C: '',
       D: '',
       answer: 'A',
+      explain:''
     },
   ]);
   const [assignmentData,setAssignmentData] =useState([])
@@ -62,6 +63,7 @@ const New_Assignment = () => {
         quizArray: formFields
       })
       console.log(createExamRes)
+      console.log(formFields)
       
     } catch (error) {
       toast(error.response.data.detail.message)
