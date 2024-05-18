@@ -41,7 +41,7 @@ const Assignment = () => {
     }
   }
   async function handlePage() {
-    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=5`);
+    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=7`);
     console.log(res.data.data);
     setTableData(res.data.data.allExam);
     setPageNumbers(res.data.data.numberOfPage)
@@ -56,14 +56,15 @@ const Assignment = () => {
    );
 
   return (
-    <div className=" w-full h-full flex flex-col justify-end px-20 bg-background-100">
+    <div className="w-full h-full flex flex-col mt-5 justify-end px-20 bg-background-100">
+      {/* <div className=' w-full h-full '></div> */}
       <div className="grid mb-3 justify-items-end">
         <button 
-        className='min-w-[80px] place-contents-center place-items-center h-fit p-2 rounded-md text-white bg-brand-500 hover:bg-brand-700 shadow-lg'
+        className='min-w-[80px] place-contents-center place-items-center h-fit p-2 px-5 rounded-md text-white bg-brand-500 hover:bg-brand-700 shadow-lg'
         >
           <a 
         href="assignment/new"
-        className='flex flex-row'
+        className='flex flex-row gap-2' 
         >
           <SmallPlusIcon/>
           Tạo đề thi
@@ -71,7 +72,7 @@ const Assignment = () => {
         </button>
       </div>
       <CheckTables tableData={TableData} currentPage = {currentPage} setCurrentPage = {setCurrentPage} />
-      <div className="mr-10 mb-10 mt-3 grid justify-items-end">
+      <div className="mr-10 mb-5 mt-3 grid justify-items-end">
         <nav aria-label="Page navigation example"> 
           <ul className="list-style-none flex">
             <li onClick={() => handleClick(-1)}>
@@ -83,7 +84,7 @@ const Assignment = () => {
                   <Button
                     name={page.toString()}
                     small={true}
-                    focus={currentPage === page.toString()} textcolor={'navy-700'} bg={''}                  />
+                    focus={currentPage === page.toString()} textcolor={'navy-700'} bg={''}/>
                 </li>
               );
             })}

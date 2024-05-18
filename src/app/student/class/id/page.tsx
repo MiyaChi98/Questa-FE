@@ -88,9 +88,17 @@ const page = () => {
                         <div className="flex h-full items-center justify-center">{`${doc.numberofSubmit} đã nộp`}</div>
                         <div className="flex h-full items-center justify-center">
                         {doc.studentSubmit?
-                        <a 
-                        href='#'
-                        className='font-thin hover:text-blue-700'>Xem kq</a>
+                        <button
+                        // href='#'
+                        onClick={()=>{
+                          const handleXemkqClick = async ()=>{
+                            const res = await api.get(`submit/${doc._id}`)
+                            console.log(res)
+                          }
+                          handleXemkqClick()
+                        }}
+                        className='font-thin hover:text-blue-700'>Xem kq
+                        </button>
                         :
                         <a
                         href={`test/?examId=${doc._id}`}
