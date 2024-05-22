@@ -1,5 +1,5 @@
 {
-  "name": "horizon-tailwind-react-nextjs",
+  "name": "ClassAssist",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -32,6 +32,7 @@
     "axios": "^1.6.5",
     "axios-hooks": "^5.0.2",
     "chakra-ui": "^0.3.9",
+    "chart.js": "^4.4.3",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^7.10.3",
     "katex": "^0.16.10",
@@ -45,6 +46,7 @@
     "react": "^18.2.0",
     "react-apexcharts": "1.4.0",
     "react-calendar": "^3.9.0",
+    "react-chartjs-2": "^5.2.0",
     "react-countdown": "^2.3.5",
     "react-custom-scrollbars-2": "^4.2.1",
     "react-dom": "^18.2.0",

@@ -35,7 +35,8 @@ function Pop_Up_Assignment(props: {
         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
           <h3 className="text-base text-xl font-semibold leading-6 text-gray-900" id="modal-title">Delete account</h3>
           <div className="mt-2">
-            <p className="text-xl text-gray-500">Are you sure you want to delete this assignment? This action will permanently removed and cannot be undone.</p>
+            <p className="text-xl text-gray-500">Bạn có chắc là bạn muốn xóa? </p>
+            <p className="text-xl text-red-500">Hành động này sẽ xóa vĩnh viễn </p>
           </div>
         </div>
       </div>

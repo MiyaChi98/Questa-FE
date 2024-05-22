@@ -91,7 +91,7 @@ const id = () => {
   const handlePage = async () => {
     const allStudent = await api.get(`course/${currentCourseID}/allStudent`);
     const allExam = await api.get(`exam/course/${currentCourseID}`);
-    await setTableData(
+    setTableData(
       allStudent.data.data.slice(
         (parseInt(currentPage) - 1) * 5,
         parseInt(currentPage) * 5,
@@ -101,11 +101,11 @@ const id = () => {
       { length: Math.ceil(allStudent.data.data.length / 5) },
       (_, i) => i + 1,
     );
-    await setPageNumbers(numberOfPage);
+    setPageNumbers(numberOfPage);
     const course = await api.get(`course/${currentCourseID}`);
     console.log(course.data.data);
-    await setCourse(course.data.data);
-    await setExamData(allExam.data.data);
+    setCourse(course.data.data);
+    setExamData(allExam.data.data);
     console.log(allExam.data.data)
   };
   useEffect(() => {
@@ -222,7 +222,7 @@ const id = () => {
             </svg>
         </div>
         </div>
-        {examData !== undefined && examData.map((exam)=>{
+        {examData && examData.map((exam)=>{
           return(
               <ExamDropdown title={exam._id}>
                 {exam.documents.map((doc)=>{

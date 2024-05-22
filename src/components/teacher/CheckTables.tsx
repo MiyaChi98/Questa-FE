@@ -124,7 +124,7 @@ function CheckTable(props: {
     columnHelper.accessor('_id', {
       id: '_id',
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white"></p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">Xem chi tiết</p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
@@ -164,7 +164,6 @@ function CheckTable(props: {
       parent.checked = false
       setCurrentPage((parseInt(currentPage)-1).toString())
     }else window.location.reload()
-    table
   }
   useEffect(() => {
     console.log(defaultData)
@@ -187,7 +186,7 @@ function CheckTable(props: {
   });
   return (
     <div className=''>
-      <div id={popUpDisplay? 'overlay' : ''}
+    <div id={popUpDisplay? 'overlay' : ''}
       onClick = {()=>{setPopUpDisplay(false)}}
       > 
         <Pop_Up_Assignment display={popUpDisplay} setPopUpDisplay={setPopUpDisplay} handleDelete={handleDelete}/>
@@ -261,7 +260,8 @@ function CheckTable(props: {
                         const id: string = cell.getValue().toString();
                         return (
                           <>
-                            <td className="min-w-[30px] border-white/0 py-3 pr-4 text-brand-600 ">
+                            <td className="min-w-[30px] border-white/0 flex flex-row gap-3 py-3 pr-4 text-brand-600 ">
+                            <a href={`assignment/detail/?examId=${id}`}>View detail</a>
                               <button
                                 onClick={() => {
                                   // setFormdisplay(true)

@@ -35,7 +35,7 @@ const page = () => {
     return resolvedValues;
   };
   const handlePage = async () => {
-    const res = await api.get(`exam/${currentExamID}`);
+    const res = await api.get(`exam/displayExamData/${currentExamID}`);
     console.log(res);
     setExamData(res.data.data.exam);
     setFormFields(await getDisplayData(res.data.data.quiz));
@@ -64,13 +64,13 @@ const page = () => {
   };
   useEffect(() => {
     handlePage();
-    const page = document.body;
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        setViolations(violations+1)
-        alert(`Cảnh cáo lần 1!`)
-      }
-    });
+    const page = document.getElementById("overlay_bgWhite");
+    // document.addEventListener('visibilitychange', () => {
+    //   if (document.hidden) {
+    //     setViolations(violations+1)
+    //     alert(`Cảnh cáo lần 1!`)
+    //   }
+    // });
     date ? null : setDate(Date.now());
   }, []);
   return (
@@ -103,14 +103,6 @@ const page = () => {
             className="h-fit w-fit rounded-md border bg-blue-300 p-1 px-2 text-2xl text-white hover:bg-blue-500">
               Nộp bài
             </button>
-            <button
-              className="h-fit w-fit rounded-md bg-gray-300 p-1 text-white hover:bg-red-500"
-              onClick={() => {
-                // setPreviewDisplay(false);
-              }}
-            >
-              <X />
-            </button>
           </div>
         </div>
       )}
@@ -129,8 +121,8 @@ const page = () => {
                   className="text-bold mb-5 h-full w-full font-serif text-[20px] text-black"
                 >
                   <hr />
-                  <div className="flex flex-row content-center justify-between">
-                    <p className="m-2 text-[21px] font-bold text-black ">
+                  <div className="flex flex-row content-center justify-between bg-gray-100">
+                    <p className="m-2 text-[21px] font-bold text-black">
                       Câu {index + 1}:
                     </p>
                   </div>

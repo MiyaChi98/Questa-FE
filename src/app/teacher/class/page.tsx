@@ -11,6 +11,7 @@ import CollapsibleElement from 'components/teacher/CollapsibleElement';
 import Select from 'react-select';
 import Dropdown from 'components/dropdown';
 import DropdownSearch from 'components/dropdown';
+import Pop_Up_Assignment from 'components/teacher/Pop_Up_Assignment';
 
 const Class = () => {
   const api = useApi();
@@ -18,6 +19,7 @@ const Class = () => {
   const [formDisplay, setFormdisplay] = useState(false);
   const [formType, setFormType] = useState('create');
   const [courseId, setCourseId] = useState();
+  const [popUpDisplay, setPopUpDisplay] =useState(false)
   const groupGrade = (arr) => {
     const groupedNumbers = {};
     arr.forEach((x) => {
@@ -37,6 +39,14 @@ const Class = () => {
     console.log(arr);
     setGrades(arr);
   };
+  const handleDelete = async () => {
+    try {
+      const res = await api.delete(`course/${courseId}`)
+      window.location.reload()
+    } catch (error) {
+     console.log(error)
+    }
+  }
   useEffect(() => {
     handlePage();
   }, []);
@@ -58,6 +68,11 @@ const Class = () => {
             setCourseId={setCourseId}
           />
         </div>
+        <div id={popUpDisplay? 'overlay' : ''}
+      onClick = {()=>{setPopUpDisplay(false)}}
+      > 
+        <Pop_Up_Assignment display={popUpDisplay} setPopUpDisplay={setPopUpDisplay} handleDelete={handleDelete}/>
+    </div>
         <div className="tilte flex h-fit items-center justify-end gap-5 p-3 px-7">
           <DropdownSearch
           type='course'
@@ -92,7 +107,7 @@ const Class = () => {
                         <p className="font-bold">{value.courseName}</p>
                       </div>
                       <div className="flex flex-row justify-between">
-                        <p>Sĩ số : {}</p>
+                        <p>Sĩ số : {value.numberofStudents}</p>
                         <div className="flex flex-row gap-3">
                           <button
                             onClick={(event) => {
@@ -106,7 +121,14 @@ const Class = () => {
                           >
                             <ChangeDetail />
                           </button>
-                          <button className="flex items-center justify-center rounded-md p-1 hover:bg-red-500">
+                          <button 
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            setCourseId(value._id);
+                            setPopUpDisplay(true);
+                          }}
+                          className="flex items-center justify-center rounded-md p-1 hover:bg-red-500">
                             <DeleteIcon />
                           </button>
                         </div>

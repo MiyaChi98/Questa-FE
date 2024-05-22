@@ -41,7 +41,7 @@ const Assignment = () => {
     }
   }
   async function handlePage() {
-    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=7`);
+    const res = await api.get(`exam/teacher/all?page=${currentPage}&limit=5`);
     console.log(res.data.data);
     setTableData(res.data.data.allExam);
     setPageNumbers(res.data.data.numberOfPage)
